@@ -1,119 +1,19 @@
-// "use client";
-// import { signIn } from "next-auth/react";
-// import { Box, Button, TextField, Typography, Stack } from "@mui/material";
-// import { Google as GoogleIcon, GitHub as GitHubIcon } from "@mui/icons-material";
-// import { useState } from "react";
-
-// export default function SignIn() {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const handleEmailPasswordSignIn = () => {
-//     // You can replace this with your authentication logic
-//     console.log("Sign in with Email: ", email, password);
-//   };
-
-//   return (
-//     <Box
-//       display="flex"
-//       justifyContent="center"
-//       alignItems="center"
-//       height="100vh"
-//       bgcolor="#f5f5f5"
-//     >
-//       <Box
-//         sx={{
-//           width: "100%",
-//           maxWidth: 400,
-//           p: 4,
-//           boxShadow: 3,
-//           borderRadius: 2,
-//           backgroundColor: "white",
-//         }}
-//       >
-//         <Typography variant="h4" align="center" gutterBottom>
-//           Welcome Back!
-//         </Typography>
-
-//         {/* Email & Password Form */}
-//         <Stack spacing={2}>
-//           <TextField
-//             label="Email"
-//             variant="outlined"
-//             fullWidth
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//           />
-//           <TextField
-//             label="Password"
-//             variant="outlined"
-//             type="password"
-//             fullWidth
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//           />
-//           <Button
-//             fullWidth
-//             variant="contained"
-//             sx={{ mb: 2, bgcolor: "#1a73e8" }}
-//             onClick={handleEmailPasswordSignIn}
-//           >
-//             Sign in with Email
-//           </Button>
-//         </Stack>
-
-//         {/* Third-party Sign-In Options */}
-//         <Typography variant="body2" align="center" sx={{ mb: 2 }} >
-//           Or sign in with
-//         </Typography>
-
-//         {/* Buttons Row for Google and GitHub */}
-//         <Stack direction="row" spacing={2} justifyContent="center">
-//           <Button
-//             fullWidth
-//             variant="contained"
-//             sx={{
-//               bgcolor: "#db4437",
-//               display: "flex",
-//               alignItems: "center",
-//               gap: 1,
-//             }}
-//             onClick={() => signIn("google")}
-//           >
-//             <GoogleIcon />
-//             Google
-//           </Button>
-//           <Button
-//             fullWidth
-//             variant="contained"
-//             sx={{
-//               bgcolor: "#333",
-//               display: "flex",
-//               alignItems: "center",
-//               gap: 1,
-//             }}
-//             onClick={() => signIn("github")}
-//           >
-//             <GitHubIcon />
-//             GitHub
-//           </Button>
-//         </Stack>
-//       </Box>
-//     </Box>
-//   );
-// }
-
-
 "use client";
 import { signIn } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box, Button, TextField, Typography, Stack, Link } from "@mui/material";
 import { Google as GoogleIcon, GitHub as GitHubIcon } from "@mui/icons-material";
+import { z } from "zod";
+
+// Zod schema for email and password validation
+const signInSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "Password must be at least 6 characters long"),
+});
 
 export default function SignIn() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Handle input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,9 +26,12 @@ export default function SignIn() {
     e.preventDefault();
     const { email, password } = form;
 
-    // Basic validation
-    if (!email || !password) {
-      setError("Email and Password are required.");
+    // Validate form using Zod
+    const validationResult = signInSchema.safeParse({ email, password });
+    if (!validationResult.success) {
+      // Extract and show the first validation error
+      const firstError = validationResult.error.issues[0]?.message;
+      setError(firstError || "Invalid input");
       return;
     }
 
@@ -150,116 +53,78 @@ export default function SignIn() {
     }
   };
 
-  // Toggle dark/light mode
-  // useEffect(() => {
-  //   if (isDarkMode) {
-  //     document.documentElement.classList.add("dark");
-  //   } else {
-  //     document.documentElement.classList.remove("dark");
-  //   }
-  // }, [isDarkMode]);
-
-  // const toggleTheme = () => {
-  //   setIsDarkMode((prev) => !prev);
-  // };
-
   return (
-    <div className={`${isDarkMode ? "bg-gray-800 text-white" : "bg-blue-500 text-black"} min-h-screen`}>
-      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Box
-          sx={{
-            width: "100%",
-            maxWidth: 400,
-            p: 4,
-            boxShadow: 3,
-            borderRadius: 2,
-            backgroundColor: isDarkMode ? "#333" : "#fff",
-          }}
-        >
-          <Typography variant="h4" align="center" gutterBottom>
-            Welcome Back!
-          </Typography>
 
-          {/* Sign-In Form */}
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={2}>
-              <TextField
-                name="email"
-                label="Email"
-                variant="outlined"
-                fullWidth
-                value={form.email}
-                onChange={handleInputChange}
-                InputLabelProps={{ style: { color: isDarkMode ? "#ccc" : "#000" } }}
-                sx={{ input: { color: isDarkMode ? "#fff" : "#000" } }}
-              />
-              <TextField
-                name="password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                fullWidth
-                value={form.password}
-                onChange={handleInputChange}
-                InputLabelProps={{ style: { color: isDarkMode ? "#ccc" : "#000" } }}
-                sx={{ input: { color: isDarkMode ? "#fff" : "#000" } }}
-              />
-              {error && (
-                <Typography color="error" variant="body2" align="center">
-                  {error}
-                </Typography>
-              )}
-              <Button fullWidth variant="contained" type="submit" sx={{ mb: 2, bgcolor: "#1a73e8" }}>
-                Sign In
-              </Button>
-            </Stack>
-          </form>
-
-          {/* Third-Party Sign-In Options */}
-          <Typography variant="body2" align="center" sx={{ my: 2 }}>
-            Or sign in with
-          </Typography>
-          <Stack direction="row" spacing={2} justifyContent="center">
+    <div className="flex justify-center items-center h-screen bg-gray-800">
+    <div className="relative p-1 rounded-lg bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 animate-gradient-border">
+      {/* Card Container */}
+      <div className="relative bg-gray-800 p-8 rounded-lg shadow-lg max-w-md w-full">
+        <h2 className="text-3xl text-gray-400 font-sans font-bold text-center mb-6">Welcome Back!</h2>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={form.email}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border bg-gray-800 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleInputChange}
+            className="w-full px-4 py-2 border bg-gray-800 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 transition"
+          >
+            Sign In
+          </button>
+        </form>
+        <p className="text-center text-sm text-gray-500 mt-4">
+          Or sign in with
+        </p>
+        <div className="flex justify-center space-x-4 mt-2">
+           <Stack direction="row" spacing={2} justifyContent="center">
+           <Button
+            fullWidth
+            variant="contained"
+            sx={{ bgcolor: "#db4437", display: "flex", alignItems: "center", gap: 1 }}
+            onClick={() => signIn("google")}
+          >
+            <GoogleIcon />
+            Google
+          </Button>
             <Button
-              fullWidth
-              variant="contained"
-              sx={{ bgcolor: "#db4437", display: "flex", alignItems: "center", gap: 1 }}
-              onClick={() => signIn("google")}
-            >
-              <GoogleIcon />
-              Google
-            </Button>
-            <Button
-              fullWidth
-              variant="contained"
-              sx={{ bgcolor: "#333", display: "flex", alignItems: "center", gap: 1 }}
-              onClick={() => signIn("github")}
-            >
-              <GitHubIcon />
-              GitHub
-            </Button>
+            fullWidth
+            variant="contained"
+            sx={{ bgcolor: "#333", display: "flex", alignItems: "center", gap: 1 }}
+            onClick={() => signIn("github")}
+          >
+            <GitHubIcon />
+            GitHub
+          </Button>
           </Stack>
-
-          {/* Footer Links */}
-          <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-            <Link href="/forgot-password" underline="hover" sx={{ color: "#1a73e8" }}>
-              Forgot Password?
-            </Link>
-          </Typography>
-          <Typography variant="body2" align="center" sx={{ mt: 1 }}>
-            Don’t have an account?{" "}
-            <Link href="/signup" underline="hover" sx={{ color: "#1a73e8" }}>
-              Sign up
-            </Link>
-          </Typography>
-
-          {/* Theme Toggle */}
-          {/* <Button variant="text" fullWidth onClick={toggleTheme} sx={{ mt: 2 }}>
-            Toggle {isDarkMode ? "Light" : "Dark"} Mode
-          </Button> */}
-        </Box>
-      </Box>
+        </div>
+        <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+           <Link href="/forgot-password" underline="hover" sx={{ color: "#1a73e8" }}>
+             Forgot Password?
+           </Link>
+         </Typography>
+         <Typography variant="body2" align="center" sx={{ mt: 1, color:"#6B7280" }}>
+           Don’t have an account?{" "}
+           <Link href="/signup" underline="hover" sx={{ color: "#1a73e8" }}>
+             Sign up
+           </Link>
+         </Typography>
+      </div>
     </div>
+  </div>
   );
 }
-

@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -8,6 +7,7 @@ import SunIcon from "../icons/sunicon";
 import MoonIcon from "../icons/moonicon";
 import Button from "@mui/material/Button";
 import { AccountCircle as ProfileIcon } from "@mui/icons-material";
+import { GitHub as GitHubIcon } from "@mui/icons-material";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -18,7 +18,22 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [isNavFixed, setIsNavFixed] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsNavFixed(true);
+      } else {
+        setIsNavFixed(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     // Check theme preference from localStorage and apply it
@@ -61,14 +76,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   };
 
   return (
-
       <nav
-        className={`${
-          isDarkMode ? "bg-gray-800 text-white" : "bg-blue-500 text-black"
-        } bg-black text-white shadow-lg py-2 px-4 flex items-center justify-between lg:justify-around gap-1 w-full min-w-80 transition-all duration-300`}
-      >
+      className= {`${
+        isDarkMode ? "bg-gray-800 text-white" : "bg-blue-300 text-black"
+      } bg-black text-white shadow-lg p-4 flex justify-between items-center transition-all duration-300`}
+  >
         {/* Logo */}
         <div className="flex flex-0 items-center">
+        <Link href={"/"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 105 70"
@@ -108,6 +123,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   fill="none"
 />
         </svg>
+        </Link>  
         </div>
 
         {/* Links for desktop */}
@@ -115,46 +131,44 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           <Link
             href="/"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600" : "hover:text-gray-600 "
+              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
             Home
           </Link>
           <Link
-            href="/Tools/Visualizer"
+            href="/Tools/Visualizers"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600" : "hover:text-gray-600"
+              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
-            Visualizer
+            Visualizers
+          </Link>
+
+          <Link
+            href="/Tools/Docs"
+            className={`text-sm sm:text-base ${
+              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
+            }`}
+          >
+            Docs
           </Link>
           <Link
-            href="/Tools/SvgEditor"
+            href="/Tools/About"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600" : "hover:text-gray-600"
+              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
             }`}
           >
-            SVG Editor
+            About
           </Link>
-          <Link
-            href="/Tools/Reviewer"
-            className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600" : "hover:text-gray-600"
-            }`}
-          >
-            Reviewer
-          </Link>
-          <Link
-            href="/Tools/UI-Designs"
-            className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600" : "hover:text-gray-600"
-            }`}
-          >
-            UI Designs
-          </Link>
-          <Link href="/profile" className="hover:text-gray-600">
+          <Link href="/profile" className="hover:bg-gray-300 rounded-full">
             <ProfileIcon className="w-16 h-16" />
           </Link>
+
+          <Link href={"https://github.com/annuk123/Qflows"} >
+          <GitHubIcon />
+          </Link>
+          
 
           {/* Theme Toggle */}
           <button

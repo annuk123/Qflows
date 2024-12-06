@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div className= {`${
-      isDarkMode ? 'bg-gray-800' : 'bg-blue-500'
+      isDarkMode ? 'bg-gray-800' : 'bg-blue-200'
     } min-w-80 min-h-screen`}>
      <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
      <div className="flex justify-center flex-col items-center w-full">
