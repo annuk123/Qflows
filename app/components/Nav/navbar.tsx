@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import SunIcon from "../icons/sunicon";
 import MoonIcon from "../icons/moonicon";
 import Link from "next/link";
+import { AccountCircle as ProfileIcon } from "@mui/icons-material";
+import { GitHub as GitHubIcon } from "@mui/icons-material";
 
 interface NavProps {
   isDarkMode: boolean;
@@ -157,7 +159,13 @@ const Nav: React.FC<NavProps> = ({
           )}
 
         </div>
+        <Link href="/profile" className="hidden lg:block hover:bg-gray-300 rounded-full">
+            <ProfileIcon className="w-16 h-16" />
+          </Link>
 
+          <Link href={"https://github.com/annuk123/Qflows"} className="hidden lg:block">
+          <GitHubIcon />
+          </Link>
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
@@ -240,6 +248,41 @@ const Nav: React.FC<NavProps> = ({
             />
           </svg>
         </button>
+
+
+         {/* Github section */}
+    <div className="mt-8 flex items-center space-x-4">
+      <Link href={"https://github.com/annuk123/Qflows"} >
+          <GitHubIcon />
+          </Link>
+    <Link
+      href="/profile"
+      className={`text-lg font-semibold ${
+        isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
+      }`}
+    >
+      Github
+    </Link>
+  </div>
+
+  {/* Profile Section */}
+  <div className="mt-8 flex items-center space-x-4">
+    <Link href="/profile">
+      <ProfileIcon
+        className={`w-12 h-12 rounded-full border-2 ${
+          isDarkMode ? "border-blue-400" : "border-blue-600"
+        }`}
+      />
+    </Link>
+    <Link
+      href="/profile"
+      className={`text-lg font-semibold ${
+        isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
+      }`}
+    >
+      Profile
+    </Link>
+  </div>
 
       </div>
 
