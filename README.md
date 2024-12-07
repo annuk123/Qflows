@@ -1,10 +1,7 @@
----
-
 # 🌟 **Qflow**  
 
 **An interactive tool to visualize and explore programming concepts with an elegant and modern user interface.**  
 
----
 
 ## 🚀 **Overview**  
 
