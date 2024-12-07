@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+# 🌟 **Qflow**  
 
-First, run the development server:
+**An interactive tool to visualize and explore programming concepts with an elegant and modern user interface.**  
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 **Overview**  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Qflow is a **powerful and intuitive platform** designed for developers, students, and enthusiasts to:  
+- **Visualize** complex programming concepts in an easy-to-understand way.  
+- **Learn** interactively with dynamic tools and guides.  
+- **Explore** new technologies and understand their workflows visually.  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Whether you’re a seasoned developer or a beginner, Qflow provides the perfect blend of simplicity and functionality to make learning and debugging enjoyable!  
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ **Features**  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- 🌐 **Interactive Visualizers**: Navigate through real-time event loops, state management, and database flows.  
+- 🎨 **Sleek Design**: Minimalistic yet vibrant UI built with cutting-edge design frameworks.  
+- 🌗 **Dark/Light Mode**: Choose your theme for a personalized experience.  
+- 🔒 **Secure Authentication**: User-friendly login and sign-up system with OAuth support for Google and GitHub.  
+- 📚 **Docs & Guides**: Built-in documentation for effortless onboarding.  
+- 🛠️ **Built for Developers**: Open-source and customizable for various use cases.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🛠 **Tech Stack**  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Qflow is powered by a modern tech stack for scalability and performance:  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: ReactJS, TypeScript, NextJS, TailwindCSS, Material-UI  
+- **Backend**: NodeJS, ExpressJS, Prisma ORM  
+- **Database**: NeonDB (PostgreSQL)  
+- **Authentication**: Auth.js (OAuth 2.0)  
+- **UI Enhancements**: Zod, GSAP, Three.js  
+
+---
+
+## 🚧 **Setup and Installation**  
+
+Follow these steps to run Qflow locally:  
+
+### 1️⃣ Prerequisites  
+Ensure you have the following installed:  
+- [Node.js](https://nodejs.org/)  
+- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)  
+
+### 2️⃣ Clone the Repository  
+```bash  
+git clone https://github.com/annuk123/Qflow.git  
+cd Qflow  
+```  
+
+### 3️⃣ Install Dependencies  
+```bash  
+npm install  
+# or  
+yarn install  
+```  
+
+### 4️⃣ Configure Environment Variables  
+Create a `.env.local` file in the root directory and add the following:  
+```env  
+DATABASE_URL=<Your Database Connection URL>  
+NEXTAUTH_URL=<Your App URL>  
+GOOGLE_CLIENT_ID=<Google OAuth Client ID>  
+GOOGLE_CLIENT_SECRET=<Google OAuth Client Secret>  
+GITHUB_CLIENT_ID=<GitHub OAuth Client ID>  
+GITHUB_CLIENT_SECRET=<GitHub OAuth Client Secret>  
+```  
+
+### 5️⃣ Start the Development Server  
+```bash  
+npm run dev  
+# or  
+yarn dev  
+```  
+Your app will be running at [http://localhost:3000](http://localhost:3000).  
+
+---
+
+## 🌐 **Deploying to Vercel**  
+
+You can deploy Qflow seamlessly on [Vercel](https://vercel.com/):  
+1. Push your code to GitHub.  
+2. Import the project into your Vercel dashboard.  
+3. Add the environment variables in the Vercel settings.  
+4. Deploy with one click!  
+
+---
+
+## 📸 **Screenshots**  
+
+### 💻 Home Page  
+![Home Page](public/image.png)  
+
+### 🎨 Visualizers  
+![Visualizer](public/image-1.png)  
+![Mobile view](public/image-2.png)
+![Mobile view](public/image-3.png)
+---
+
+## 🤝 **Contributing**  
+
+Contributions are welcome! To get started:  
+1. Fork this repository.  
+2. Create a new branch: `git checkout -b feature-xyz`.  
+3. Commit your changes: `git commit -m "Add feature xyz"`.  
+4. Push to the branch: `git push origin feature-xyz`.  
+5. Open a pull request.  
+
+---
+
+## 📜 **License**  
+
+This project is licensed under the [MIT License](./LICENSE).  
+
+---
+
+## 🙌 **Acknowledgments**  
+
+A huge thanks to the open-source community and libraries that made this project possible!  
+
+--- 
+
+**Happy Coding! 💻✨**  
