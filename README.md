@@ -48,8 +48,8 @@ Ensure you have the following installed:
 
 ### 2️⃣ Clone the Repository  
 ```bash  
-git clone https://github.com/annuk123/Qflow.git  
-cd Qflow  
+git clone https://github.com/annuk123/Qflows.git  
+cd Qflows  
 ```  
 
 ### 3️⃣ Install Dependencies  
@@ -63,7 +63,8 @@ yarn install
 Create a `.env.local` file in the root directory and add the following:  
 ```env  
 DATABASE_URL=<Your Database Connection URL>  
-NEXTAUTH_URL=<Your App URL>  
+NEXTAUTH_URL=<Your App URL>
+NEXTAUTH_SECRET=<Your Next Secret Key>
 GOOGLE_CLIENT_ID=<Google OAuth Client ID>  
 GOOGLE_CLIENT_SECRET=<Google OAuth Client Secret>  
 GITHUB_CLIENT_ID=<GitHub OAuth Client ID>  
