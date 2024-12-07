@@ -26,14 +26,14 @@ export default function Home() {
       {/* <h1 className="text-4xl text-center mt-5">Welcome to Qflow</h1> */}
       <div className="flex items-center justify-center gap-x-2 mt-8">
   <h1
-    className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 drop-shadow-lg"
+    className="text-5xl font-bold text-transparent  bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 drop-shadow-lg justify-center text-center mb-3"
   >
     Welcome to Qflow
   </h1>
 </div>
 
 
-      <p className="text-lg text-center">Get started by editing{' '} <code className="bg-gray-700 p-1 rounded">pages/index.tsx</code></p>
+      <p className="text-lg text-center text-gray-300 ">Get started by editing{' '} <code className="bg-gray-700 p-1 rounded">pages/index.tsx</code></p>
       </div>
      
     </div>

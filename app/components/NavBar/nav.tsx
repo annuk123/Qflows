@@ -74,6 +74,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
     router.push("/"); // Redirect to homepage after logout
   };
 
+
+
   return (
       <nav
       className= {`${
@@ -160,8 +162,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           >
             About
           </Link>
-          <Link href="/profile" className="hover:bg-gray-300 rounded-full">
-            <ProfileIcon className="w-16 h-16" />
+          <Link href="/profile" className="rounded-full">
+            <ProfileIcon className="w-20 h-20" />
           </Link>
 
           <Link href={"https://github.com/annuk123/Qflows"} >
@@ -186,8 +188,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             <Button
               onClick={handleLoginRedirect}
               variant="contained"
-              color="primary"
-              className="ml-4"
+              //color="primary"
+              className="ml-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 animate-gradient-border"
             >
               <Link href="/signIn">Login</Link>
             </Button>
@@ -201,7 +203,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
               Logout
             </Button>
           )}
-
         </div>
 
 
@@ -212,11 +213,11 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
         <div className="flex items-center gap-4 lg:hidden">
           <button
             onClick={handleToggleTheme}
-            className="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-200 transition-colors duration-200"
+            className="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-200 transition-colors duration-200 ml-12"
             aria-label="Toggle dark mode"
           >
             {isDarkMode ? (
-              <SunIcon className="text-white ml-12" />
+              <SunIcon className="text-white " />
             ) : (
               <MoonIcon className="text-black" />
             )}
