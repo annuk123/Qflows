@@ -147,7 +147,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           </Link>
 
           <Link
-            href="/Tools/Docs"
+            href="/Docs"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
@@ -155,7 +155,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             Docs
           </Link>
           <Link
-            href="/Tools/About"
+            href="/About"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-blue-600 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
             }`}
@@ -339,7 +339,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
     >
-      Docs
+      Debugger
     </Link>
     <Link
       href="/Tools/About"

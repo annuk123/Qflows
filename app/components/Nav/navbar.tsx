@@ -27,6 +27,7 @@ const languages = [
   "Swift",
   "Go",
   "Kotlin",
+  "Rust",
 ];
 
 const Nav: React.FC<NavProps> = ({

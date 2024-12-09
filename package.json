@@ -10,6 +10,10 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/state": "^6.5.0",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "^6.35.3",
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
     "@monaco-editor/react": "^4.6.0",
