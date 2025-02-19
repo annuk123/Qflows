@@ -1,12 +1,40 @@
 import type { NextConfig } from "next";
+import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
+//import path from "path";
 
 // Ensure dotenv is loaded
-require('dotenv').config();
+require("dotenv").config();
+
 
 const nextConfig: NextConfig = {
+
+  experimental: {
+    esmExternals: true,
+  },
+  
   env: {
     GITHUB_ID: process.env.GITHUB_ID || '', // Use descriptive names here
     GITHUB_SECRET: process.env.GITHUB_SECRET || '', // Use descriptive names here
+  },
+
+  webpack(config, { isServer }) {
+
+    
+    // Only apply the plugin in client-side builds
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+      };
+      config.plugins.push(
+        new MonacoWebpackPlugin({
+          languages: ['python', 'java', 'javascript', 'csharp', 'cpp', 'ruby', 'rust', 'typescript', 'go', 'kotlin', 'graphql'], // Add other languages you need, e.g. 'javascript', 'typescript', etc.
+          features: [ '!colorPicker', '!fontZoom', '!gotoSymbol', '!snippet', '!wordHighlighter'], // Add other features you need, e.g. 'accessibilityHelp', 'colorPicker', 'fontZoom', 'gotoSymbol', 'snippets', 'wordHighlighter'
+        })
+      );
+    }
+    return config;
   },
 };
 

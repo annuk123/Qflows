@@ -2,7 +2,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Nav from "@/app/components/Nav/navbar";
 import CodeEditor from "./editor/code";
-//import PythonVisualizer from "./Python/page"; // Python visualizer component
+//import CodeRunner from "../PythonVisualizer/page";// Python visualizer component
 import { on } from "events";
 
 interface VisualizerProps {
@@ -150,15 +150,16 @@ const Visualizer = () => {
       />
       {selectedLanguage === "JavaScript" ? (
         <JavaScriptVisualizer isDarkMode={isDarkMode} speed={speed} />
-      // ) : selectedLanguage === "Python" ? (
-      //   <PythonVisualizer isDarkMode={isDarkMode} speed={speed} />
-      ) : (
+      //  ) : selectedLanguage === "Python" ? (
+      //    <CodeRunner />
+       ) : (
         <div className="p-4 text-center">
           <h2 className="text-xl font-bold">
             Visualizer for {selectedLanguage} is not available yet!
           </h2>
         </div>
-      )}
+      )
+    }
     </div>
   );
 };

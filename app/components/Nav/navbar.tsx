@@ -53,8 +53,8 @@ const Nav: React.FC<NavProps> = ({
   return (
     <nav
       className={`${
-        isDarkMode ? "bg-gray-800 text-white" : "bg-blue-300 text-black"
-      } bg-black text-white shadow-lg p-4 flex justify-between items-center transition-all duration-300`}
+        isDarkMode ? "bg-gray-900 text-white" : "bg-blue-300 text-black"
+      } bg-black text-white shadow-lg p-4 flex justify-between items-center transition-all duration-300 fixed w-full z-10 top-0 `}
     >
       <div className="flex items-center mr-12">
       <Link href={"/"}>

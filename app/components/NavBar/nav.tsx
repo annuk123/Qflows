@@ -17,22 +17,21 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [isNavFixed, setIsNavFixed] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setIsNavFixed(true);
-      } else {
-        setIsNavFixed(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 0) {
+  //       setIsNavFixed(true);
+  //     } else {
+  //       setIsNavFixed(false);
+  //     }
+  //   };
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   useEffect(() => {
     // Check theme preference from localStorage and apply it
@@ -79,8 +78,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   return (
       <nav
       className= {`${
-        isDarkMode ? "bg-gray-800 text-white" : "bg-blue-300 text-black"
-      } bg-black text-white shadow-lg p-4 flex justify-between items-center transition-all duration-300`}
+        isDarkMode ? "bg-gray-900 text-white" : "bg-blue-300 text-black"
+      } bg-black text-white  p-4 flex justify-between items-center transition-all duration-300 fixed w-full z-10 top-0 `}
   >
         {/* Logo */}
         <div className="flex flex-0 items-center">
@@ -132,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           <Link
             href="/"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
             Home
@@ -140,27 +139,27 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           <Link
             href="/Tools/Visualizers"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
             Visualizers
           </Link>
 
           <Link
-            href="/Docs"
+            href="/Compiler"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200" : "hover:text-gray-600 font-bold"
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
-            Docs
+           Online Compiler
           </Link>
           <Link
-            href="/Abouts"
+            href="/AI Tutor"
             className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-blue-600 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
             }`}
           >
-            About
+            AI Tutor
           </Link>
           <Link href="/profile" className="rounded-full">
             <ProfileIcon className="w-20 h-20" />
@@ -189,9 +188,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
               onClick={handleLoginRedirect}
               variant="contained"
               //color="primary"
-              className="ml-4 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 animate-gradient-border"
+              className="ml-4 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 animate-gradient-border"
             >
-              <Link href="/signIn">Login</Link>
+              <Link href="/signIn" className="text-gray-400 hover:text-gray-300">Login</Link>
             </Button>
           ) : (
             <Button

@@ -37,10 +37,10 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onRunCode, isDarkMode, speed,
   };
 
   return (
-    <div className={`mt-4 ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"}`}>
+    <div className={`${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-black"} mt-14`}>
 
-      <div className="relative flex justify-end items-center space-x-4">
-      <div className=" flex items-center gap-2">
+      <div className="relative flex justify-end items-center space-x-4 ">
+      <div className=" flex items-center gap-2 mt-6">
           <label htmlFor="speed" className="font-bold ">
             Speed: {speed} ms
           </label>
@@ -62,7 +62,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onRunCode, isDarkMode, speed,
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-7 h-7 mb-2 mt-2 cursor-pointer "
+    className="w-7 h-7 mb-2 mt-8 cursor-pointer "
     onClick={handleZoomIn}
   >
     <circle cx="11" cy="11" r="8" />
@@ -78,7 +78,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onRunCode, isDarkMode, speed,
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-7 h-7 mt-2 mb-2 cursor-pointer"
+    className="w-7 h-7 mt-8 mb-2 cursor-pointer"
     onClick={handleZoomOut}
   >
     <circle cx="11" cy="11" r="8" />
@@ -88,7 +88,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onRunCode, isDarkMode, speed,
 
       <button
         onClick={handleRunCode}
-        className="bg-blue-500 text-white px-4 py-2 mt-1 ml-4 rounded shadow"
+        className="bg-blue-500 text-white px-4 py-2 mt-8 ml-4 rounded shadow"
       >
         Run Code
       </button>
