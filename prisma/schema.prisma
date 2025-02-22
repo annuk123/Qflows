@@ -41,3 +41,13 @@ model Session {
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id])
 }
+
+model Testimonial {
+  userName  String
+  avatarUrl String?
+  rating    Int
+  review    String
+  createdAt DateTime @default(now())
+  place     String?
+  id        Int      @id @default(autoincrement())
+}

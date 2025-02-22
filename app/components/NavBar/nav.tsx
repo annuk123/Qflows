@@ -146,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           </Link>
 
           <Link
-            href="/Compiler"
+            href="/OnlineCompiler"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
@@ -154,12 +154,21 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
            Online Compiler
           </Link>
           <Link
-            href="/AI Tutor"
+            href="/Docs"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
             }`}
           >
             AI Tutor
+          </Link>
+
+          <Link
+            href="/feedback"
+            className={`text-sm sm:text-base ${
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
+            }`}
+          >
+            feedback
           </Link>
           <Link href="/profile" className="rounded-full">
             <ProfileIcon className="w-20 h-20" />
