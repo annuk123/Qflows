@@ -132,10 +132,10 @@ const handleSubmitReview = async () => {
   <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
   <div className="max-w-4xl mx-auto text-center text-white mt-10 py-12">
-    <h2 className="text-5xl font-bold mb-8">What Our Users Say</h2>
-    
+    {/* <h2 className="text-5xl font-bold mb-8">What Our Users Say</h2>
+     */}
     {/* Submit a Review */}
-    <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-2xl">
+    <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-2xl mt-8">
       <h3 className="text-xl font-semibold mb-6">Loved using our tool? Rate us!</h3>
       <input
         type="text"
