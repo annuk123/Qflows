@@ -2,7 +2,7 @@
 
 
 import NextAuth from 'next-auth';
-import { authOptions } from '@/app/config/authOptions';
+import { authOptions } from '@/config/authOptions';
 
 const handler = NextAuth(authOptions);
 //console.log('GITHUB_ID:', process.env.GITHUB_ID);

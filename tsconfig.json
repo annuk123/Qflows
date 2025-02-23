@@ -1,4 +1,5 @@
 {
+  // Removed schema reference due to loading issues
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -23,6 +24,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/Tools/PythonVisualizer/components/pyodiderRunner.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/Tools/PythonVisualizer/components/pyodiderRunner.tsx", "types/next-auth.d.ts"],
   "exclude": ["node_modules"]
 }

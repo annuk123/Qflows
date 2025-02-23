@@ -562,7 +562,82 @@ const TestimonialsSection: React.FC = () => {
     });
   };
 
-    const handleUpdateReview = async () => {
+  //   const handleUpdateReview = async () => {
+  //   if (!editingReview) return;
+
+    
+  
+  //   try {
+  //     const updatedReview = {
+  //       userName: editedReview.userName,
+  //       place: editedReview.place,
+  //       rating: editedReview.rating,
+  //       review: editedReview.review,
+  //       avatarUrl: editingReview.avatarUrl, // Keep existing avatar
+  //     };
+
+  //     //const userToken = session?.user?.token || session?.accessToken || "";
+
+  
+  //     // await axios.patch(
+  //     //   `/api/testimonials/${editingReview.id}`, 
+  //     //   updatedReview, 
+  //     //   {
+  //     //     headers: {
+  //     //       Authorization: `Bearer ${userToken}` // Make sure userToken is available
+  //     //     }
+  //     //   }
+  //     // );
+
+  //     // await axios.patch(
+  //     //   `/api/testimonials/${editingReview.id}`,
+  //     //   updatedReview,
+  //     //   {
+  //     //     headers: {
+  //     //       Authorization: userToken ? `Bearer ${userToken}` : "",
+  //     //     }
+  //     //   }
+  //     // );
+
+  //     if (!session?.accessToken) {
+  //       console.error("No access token found!");
+  //       return;
+  //     }
+    
+  //     try {
+  //       await axios.patch(
+  //         `/api/testimonials/${editingReview.id}`,
+  //         updatedReview,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${session.accessToken}`, // ✅ Ensure token is included
+  //           },
+  //         }
+  //       );
+  //     } catch (error) {
+  //       console.error("Error updating testimonial:", error);
+  //     }
+
+      
+  
+  //     setTestimonials((prevTestimonials) =>
+  //       prevTestimonials.map((t) =>
+  //         t.id === editingReviewId ? { ...t, ...updatedReview } : t
+  //       )
+  //     );
+  
+  //     // Reset editing states properly
+
+  //     setEditingReview(null);
+  //     setEditingReviewId(null);
+  //     setEditedReview({ userName: "", place: "", review: "", rating: 0 });
+  //   } catch (error) {
+  //     console.error("Error updating review:", error);
+  //   }
+  // };
+
+  const handleUpdateReview = async () => {
     if (!editingReview) return;
   
     try {
@@ -573,27 +648,34 @@ const TestimonialsSection: React.FC = () => {
         review: editedReview.review,
         avatarUrl: editingReview.avatarUrl, // Keep existing avatar
       };
-
-      const userToken = session?.accessToken || "";
   
+      // Ensure session token is retrieved properly
+      const userToken = session?.accessToken;
+      if (!userToken) {
+        console.error("No access token found!");
+        return;
+      }
+  
+      // Make API request with proper headers
       await axios.patch(
-        `/api/testimonials/${editingReview.id}`, 
-        updatedReview, 
+        `/api/testimonials/${editingReview.id}`,
+        updatedReview,
         {
           headers: {
-            Authorization: `Bearer ${userToken}` // Make sure userToken is available
-          }
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${userToken}`,
+          },
         }
       );
   
+      // Update state
       setTestimonials((prevTestimonials) =>
         prevTestimonials.map((t) =>
           t.id === editingReviewId ? { ...t, ...updatedReview } : t
         )
       );
   
-      // Reset editing states properly
-
+      // Reset editing states
       setEditingReview(null);
       setEditingReviewId(null);
       setEditedReview({ userName: "", place: "", review: "", rating: 0 });
@@ -601,7 +683,7 @@ const TestimonialsSection: React.FC = () => {
       console.error("Error updating review:", error);
     }
   };
-
+  
   const handleCancelEdit = () => {
   setEditingReviewId(null);
   setEditedReview({ userName: "", place: "", review: "", rating: 0 });
