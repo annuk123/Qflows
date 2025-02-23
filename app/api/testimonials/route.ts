@@ -97,6 +97,7 @@ const corsHeaders = {
 
 // Zod schema to validate testimonial data
 const testimonialSchema = z.object({
+  userId: z.union([z.string(), z.number()]), // Ensure userId is a valid UUID
   userName: z.string().min(1, "Username is required"),
   avatarUrl: z.string().optional(),
   rating: z.number().min(0).max(5).default(0),
@@ -126,10 +127,9 @@ export async function OPTIONS() {
   return NextResponse.json({}, { status: 200, headers: corsHeaders });
 }
 
-// Handle POST requests
 export async function POST(req: Request) {
   try {
-    // Check if the request has a body
+    // Ensure request has a body
     if (!req.body) {
       return NextResponse.json(
         { error: "Request body is missing" },
@@ -142,18 +142,35 @@ export async function POST(req: Request) {
     console.log("Parsed body:", body);
 
     // Validate input data
-    const parsedData = testimonialSchema.parse(body);
+    //const parsedData = testimonialSchema.parse(body);
 
+    if (!body.userId) {
+      return NextResponse.json(
+        { error: "userId is required" },
+        { status: 400, headers: corsHeaders }
+      );
+    }
+    const parsedData = {
+      ...testimonialSchema.parse(body),
+      userId: Number(body.userId), // Convert string to number
+    };
     // Insert data into the database
     const newTestimonial = await prisma.testimonial.create({
-      data: parsedData,
+      data: {
+        userId: parsedData.userId, // Ensure userId is included
+        userName: parsedData.userName,
+        avatarUrl: parsedData.avatarUrl,
+        place: parsedData.place,
+        rating: parsedData.rating,
+        review: parsedData.review,
+      },
     });
 
     return NextResponse.json(newTestimonial, { status: 201, headers: corsHeaders });
   } catch (error) {
     console.error("Error adding testimonial:", error);
 
-    // Handle Prisma errors
+    // Handle validation errors
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: "Validation error", details: error.errors },
@@ -167,8 +184,6 @@ export async function POST(req: Request) {
     );
   }
 }
-
-
 
 //Delete testimonial
 

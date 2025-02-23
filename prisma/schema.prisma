@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  email         String    @unique
+  id            Int           @id @default(autoincrement())
+  email         String        @unique
   password      String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  username      String    @unique
-  emailVerified DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  username      String        @unique
+  emailVerified DateTime?     
   image         String?
   accounts      Account[]
   sessions      Session[]
+  testinomials  Testimonial[]
 }
 
 model Account {
@@ -34,20 +35,29 @@ model Account {
 }
 
 model Session {
-  id           Int      @id @default(autoincrement())
+  id           Int           @id @default(autoincrement())
   userId       Int
-  sessionToken String   @unique
+  sessionToken String        @unique
   userAgent    String?
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id])
+  user         User          @relation(fields: [userId], references: [id])
+  testinomials Testimonial[]
 }
 
 model Testimonial {
+  id        Int      @id @default(autoincrement())
+
   userName  String
   avatarUrl String?
   rating    Int
   review    String
   createdAt DateTime @default(now())
   place     String?
-  id        Int      @id @default(autoincrement())
+  userId   Int     
+
+  user      User     @relation(fields: [userId], references: [id])
+  
+  Session   Session? @relation(fields: [sessionId], references: [id])
+  sessionId Int?
+ 
 }

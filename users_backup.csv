@@ -1,0 +1,2 @@
+id,email,password,createdAt,updatedAt,username,emailVerified,image
+1,test@example.com,hashedpassword,2025-02-22 19:08:40.92,2025-02-22 19:08:40.92,TestUser,,

@@ -97,7 +97,7 @@ export default function SignUp() {
           <form onSubmit={handleSignUp} className="space-y-4">
             <TextField
               name="username"
-              label="Username"
+              label="Full Name"
               variant="outlined"
               fullWidth
               value={form.username}

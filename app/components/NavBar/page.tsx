@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   >
         {/* Logo */}
         <div className="flex flex-0 items-center">
-        <Link href={"/"}>
+        <Link href={"/Welcome"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 105 70"
@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
         {/* Links for desktop */}
         <div className="hidden lg:flex lg:items-center lg:space-x-7 lg:ml-16">
           <Link
-            href="/"
+            href="/Welcome"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
@@ -192,25 +192,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             )}
           </button>
 
-          {!isLoggedIn ? (
-            <Button
-              onClick={handleLoginRedirect}
-              variant="contained"
-              //color="primary"
-              className="ml-4 bg-gradient-to-r from-gray-700 via-gray-800 to-gray-900 animate-gradient-border"
-            >
-              <Link href="/signIn" className="text-gray-400 hover:text-gray-300">Login</Link>
-            </Button>
-          ) : (
-            <Button
-              onClick={handleLogout}
-              variant="contained"
-              color="secondary"
-              className="ml-4"
-            >
-              Logout
-            </Button>
-          )}
         </div>
 
 
@@ -230,27 +211,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
               <MoonIcon className="text-black" />
             )}
           </button>
-        </div>
-        <div className="flex items-center lg:hidden">
-          {!isLoggedIn ? (
-            <Button
-              onClick={handleLoginRedirect}
-              variant="contained"
-              color="primary"
-              className="ml-6"
-            >
-              <Link href="/signIn">Login</Link>
-            </Button>
-          ) : (
-            <Button
-              onClick={handleLogout}
-              variant="contained"
-              color="secondary"
-              className="ml-4"
-            >
-              Logout
-            </Button>
-          )}
         </div>
 
 
@@ -326,7 +286,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   {/* Navigation Links */}
   <nav className="mt-16 space-y-6">
     <Link
-      href="/"
+      href="/Welcome"
       className={`block text-lg font-semibold ${
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
