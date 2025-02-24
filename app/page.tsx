@@ -1,5 +1,5 @@
 "use client";
-import Navs from "./components/Navs/page";
+import Navbar from "./components/NavBar/page";
 import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import CodePreviewWithVideo from "./CodePreview/page";
@@ -49,7 +49,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-sans">
-      <Navs isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+     <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
 
       {/* Hero Section */}
       <section className="text-center py-20 mt-14">

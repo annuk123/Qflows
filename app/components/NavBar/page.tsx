@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   >
         {/* Logo */}
         <div className="flex flex-0 items-center">
-        <Link href={"/Welcome"}>
+        <Link href={"/"}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 105 70"
@@ -129,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
         {/* Links for desktop */}
         <div className="hidden lg:flex lg:items-center lg:space-x-7 lg:ml-16">
           <Link
-            href="/Welcome"
+            href="/"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
@@ -137,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             Home
           </Link>
           <Link
-            href="/Tools/Visualizers"
+            href="/languages/JavaScript"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}

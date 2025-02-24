@@ -1,15 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/config/authOptions";// Adjust path as needed
 
-//export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
-  export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+// ✅ PATCH: Update a testimonial (Anyone can update)
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   const params = await context.params;
-  console.log("Received params:", params); // Debugging log to check if params exist
+  console.log("Received params:", params); // Debugging log
 
-  // Ensure `params.id` exists before using it
   if (!params?.id) {
     return NextResponse.json({ message: "Testimonial ID is required" }, { status: 400 });
   }
@@ -19,41 +16,20 @@ import { authOptions } from "@/config/authOptions";// Adjust path as needed
     return NextResponse.json({ message: "Invalid testimonial ID" }, { status: 400 });
   }
 
-  // Get session data
-  const session = await getServerSession(authOptions);
-  console.log("Session Data:", session); // Debugging log to check session data
-
-  if (!session || !session.user || !session.user.id) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-
-  const userId = Number(session.user.id);
-  if (isNaN(userId)) {
-    return NextResponse.json({ message: "Invalid user ID" }, { status: 400 });
-  }
-
   try {
     // Find the testimonial
     const existingTestimonial = await prisma.testimonial.findUnique({
       where: { id: testimonialId },
-      select: {
-        id: true,
-        userId: true,
-      },
     });
 
     if (!existingTestimonial) {
       return NextResponse.json({ message: "Testimonial not found" }, { status: 404 });
     }
 
-    // Restrict update to the testimonial's owner
-    if (existingTestimonial.userId !== userId) {
-      return NextResponse.json({ message: "Forbidden: You can't edit this testimonial" }, { status: 403 });
-    }
-
-    // Validate request body
+    // ✅ Validate request body (Ensures only valid fields are updated)
     const body = await req.json();
     const updateSchema = z.object({
+      name: z.string().optional(),
       userName: z.string().optional(),
       avatarUrl: z.string().optional(),
       rating: z.number().min(0).max(5).optional(),
@@ -69,7 +45,7 @@ import { authOptions } from "@/config/authOptions";// Adjust path as needed
       );
     }
 
-    // Update testimonial
+    // ✅ Update testimonial (Anyone can update)
     const updatedTestimonial = await prisma.testimonial.update({
       where: { id: testimonialId },
       data: validatedData.data,
@@ -82,31 +58,59 @@ import { authOptions } from "@/config/authOptions";// Adjust path as needed
   }
 }
 
+// ✅ DELETE: Remove a testimonial (Anyone can delete)
+// export async function DELETE(req: Request) {
+//   try {
+//     const url = new URL(req.url);
+//     const id = url.pathname.split("/").pop(); // Extracts ID from "/api/testimonials/{id}"
+
+//     if (!id) {
+//       return NextResponse.json({ error: "Testimonial ID is required" }, { status: 400 });
+//     }
+
+//     const numericId = parseInt(id, 10);
+//     if (isNaN(numericId)) {
+//       return NextResponse.json({ error: "Invalid testimonial ID" }, { status: 400 });
+//     }
+
+//     // ✅ Check if testimonial exists
+//     const existingTestimonial = await prisma.testimonial.findUnique({ where: { id: numericId } });
+//     if (!existingTestimonial) {
+//       return NextResponse.json({ error: "Testimonial not found" }, { status: 404 });
+//     }
+
+//     // ✅ Delete testimonial (Anyone can delete)
+//     await prisma.testimonial.delete({ where: { id: numericId } });
+
+//     return NextResponse.json({ message: "Testimonial deleted successfully" }, { status: 200 });
+//   } catch (error) {
+//     console.error("Error deleting testimonial:", error);
+//     return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
+//   }
+// }
+
 
 export async function DELETE(req: Request) {
   try {
-    // Extract ID from the request URL
     const url = new URL(req.url);
-    const id = url.pathname.split("/").pop(); // Extracts ID from "/api/testimonials/{id}"
+    const id = url.pathname.split("/").filter(Boolean).pop(); // Ensures non-empty value
 
     if (!id) {
       return NextResponse.json({ error: "Testimonial ID is required" }, { status: 400 });
     }
 
-    const numericId = parseInt(id, 10); // Convert to number
-
-    // Validate ID
+    const numericId = parseInt(id, 10);
     if (isNaN(numericId)) {
       return NextResponse.json({ error: "Invalid testimonial ID" }, { status: 400 });
     }
 
-    // Check if the testimonial exists
+    // ✅ Check if testimonial exists
     const existingTestimonial = await prisma.testimonial.findUnique({ where: { id: numericId } });
     if (!existingTestimonial) {
       return NextResponse.json({ error: "Testimonial not found" }, { status: 404 });
     }
 
-    // Delete testimonial
+    // ✅ Delete testimonial (Anyone can delete)
     await prisma.testimonial.delete({ where: { id: numericId } });
 
     return NextResponse.json({ message: "Testimonial deleted successfully" }, { status: 200 });
@@ -115,4 +119,3 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
   }
 }
-

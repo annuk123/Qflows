@@ -501,8 +501,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import { useSession } from "next-auth/react"; // Import NextAuth session
-import { Pencil, Trash } from "lucide-react";// Import Pencil and Trash icons from react-icons
+import { Pencil, Trash } from "lucide-react";
 
 interface Testimonial {
   id: string;
@@ -511,13 +510,9 @@ interface Testimonial {
   place: string;
   rating: number;
   review: string;
-  userId: string;
 }
 
 const TestimonialsSection: React.FC = () => {
-  const { data: session } = useSession(); // Get session data
-  const currentUserId = session?.user?.id || null; // Extract user ID from session
-
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [editingReviewId, setEditingReviewId] = useState<string | null>(null);
   const [editedReview, setEditedReview] = useState({
@@ -526,7 +521,7 @@ const TestimonialsSection: React.FC = () => {
     review: "",
     rating: 0,
   });
-    const [editingReview, setEditingReview] = useState<Testimonial | null>(null); 
+  const [editingReview, setEditingReview] = useState<Testimonial | null>(null);
 
   useEffect(() => {
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
@@ -562,84 +557,9 @@ const TestimonialsSection: React.FC = () => {
     });
   };
 
-  //   const handleUpdateReview = async () => {
-  //   if (!editingReview) return;
-
-    
-  
-  //   try {
-  //     const updatedReview = {
-  //       userName: editedReview.userName,
-  //       place: editedReview.place,
-  //       rating: editedReview.rating,
-  //       review: editedReview.review,
-  //       avatarUrl: editingReview.avatarUrl, // Keep existing avatar
-  //     };
-
-  //     //const userToken = session?.user?.token || session?.accessToken || "";
-
-  
-  //     // await axios.patch(
-  //     //   `/api/testimonials/${editingReview.id}`, 
-  //     //   updatedReview, 
-  //     //   {
-  //     //     headers: {
-  //     //       Authorization: `Bearer ${userToken}` // Make sure userToken is available
-  //     //     }
-  //     //   }
-  //     // );
-
-  //     // await axios.patch(
-  //     //   `/api/testimonials/${editingReview.id}`,
-  //     //   updatedReview,
-  //     //   {
-  //     //     headers: {
-  //     //       Authorization: userToken ? `Bearer ${userToken}` : "",
-  //     //     }
-  //     //   }
-  //     // );
-
-  //     if (!session?.accessToken) {
-  //       console.error("No access token found!");
-  //       return;
-  //     }
-    
-  //     try {
-  //       await axios.patch(
-  //         `/api/testimonials/${editingReview.id}`,
-  //         updatedReview,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${session.accessToken}`, // ✅ Ensure token is included
-  //           },
-  //         }
-  //       );
-  //     } catch (error) {
-  //       console.error("Error updating testimonial:", error);
-  //     }
-
-      
-  
-  //     setTestimonials((prevTestimonials) =>
-  //       prevTestimonials.map((t) =>
-  //         t.id === editingReviewId ? { ...t, ...updatedReview } : t
-  //       )
-  //     );
-  
-  //     // Reset editing states properly
-
-  //     setEditingReview(null);
-  //     setEditingReviewId(null);
-  //     setEditedReview({ userName: "", place: "", review: "", rating: 0 });
-  //   } catch (error) {
-  //     console.error("Error updating review:", error);
-  //   }
-  // };
-
   const handleUpdateReview = async () => {
     if (!editingReview) return;
-  
+
     try {
       const updatedReview = {
         userName: editedReview.userName,
@@ -648,34 +568,15 @@ const TestimonialsSection: React.FC = () => {
         review: editedReview.review,
         avatarUrl: editingReview.avatarUrl, // Keep existing avatar
       };
-  
-      // Ensure session token is retrieved properly
-      const userToken = session?.accessToken;
-      if (!userToken) {
-        console.error("No access token found!");
-        return;
-      }
-  
-      // Make API request with proper headers
-      await axios.patch(
-        `/api/testimonials/${editingReview.id}`,
-        updatedReview,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
-  
-      // Update state
+
+      await axios.patch(`/api/testimonials/${editingReview.id}`, updatedReview);
+
       setTestimonials((prevTestimonials) =>
         prevTestimonials.map((t) =>
           t.id === editingReviewId ? { ...t, ...updatedReview } : t
         )
       );
-  
-      // Reset editing states
+
       setEditingReview(null);
       setEditingReviewId(null);
       setEditedReview({ userName: "", place: "", review: "", rating: 0 });
@@ -683,12 +584,12 @@ const TestimonialsSection: React.FC = () => {
       console.error("Error updating review:", error);
     }
   };
-  
+
   const handleCancelEdit = () => {
-  setEditingReviewId(null);
-  setEditedReview({ userName: "", place: "", review: "", rating: 0 });
-};
-  
+    setEditingReviewId(null);
+    setEditedReview({ userName: "", place: "", review: "", rating: 0 });
+  };
+
   return (
     <section className="bg-gradient-to-br from-gray-800 to-gray-900 py-16 px-6">
       <div className="max-w-6xl mx-auto text-center text-white">
@@ -707,10 +608,9 @@ const TestimonialsSection: React.FC = () => {
                   key={testimonial.id}
                   className="relative snap-center flex-shrink-0 bg-white text-gray-800 rounded-xl shadow-lg p-6 max-w-xs transition-transform hover:scale-105 hover:shadow-xl"
                 >
-                  {/* Edit & Delete Icons at Top Right */}
-                  <div className="absolute top-3 right-3 flex space-x-2 ">
+                  <div className="absolute top-3 right-3 flex space-x-2">
                     <Pencil
-                      className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-700 "
+                      className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-700"
                       onClick={() => handleEditReview(testimonial)}
                     />
                     <Trash
@@ -719,13 +619,28 @@ const TestimonialsSection: React.FC = () => {
                     />
                   </div>
 
-                  {/* User Info */}
                   <div className="flex items-center space-x-4 mb-4">
                     <img
                       src={testimonial.avatarUrl}
                       alt={`${testimonial.userName}'s avatar`}
                       className="w-12 h-12 rounded-full border-2 border-gray-300 mt-6"
                     />
+                    {/* <div> */}
+                      {/* <h3 className="font-semibold text-lg text-gray-900 mt-7">
+                        {testimonial.userName}
+                      </h3>
+                      <p className="text-sm text-gray-500">{testimonial.place}</p>
+                    </div>
+                  </div>
+
+                  <p className="text-sm text-gray-700 italic">{testimonial.review}</p>
+
+                  <div className="flex items-center space-x-4 mb-4">
+                    <img
+                      src={testimonial.avatarUrl}
+                      alt={`${testimonial.userName}'s avatar`}
+                      className="w-12 h-12 rounded-full border-2 border-gray-300 mt-6"
+                    /> */}
                     <div>
                     {editingReviewId === testimonial.id ? (
                     <input
@@ -770,8 +685,9 @@ const TestimonialsSection: React.FC = () => {
                   <p className="text-sm text-gray-700 italic">{testimonial.review}</p>
                 )}
 
-                  {/* Star Ratings */}
-                  <div className="flex items-center ">
+                  {/* Rating */}
+
+                  <div className="flex items-center">
                     {Array.from({ length: 5 }).map((_, index) => (
                       <svg
                         key={index}
@@ -786,7 +702,6 @@ const TestimonialsSection: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* Edit Mode Buttons */}
                   {editingReviewId === testimonial.id && (
                     <div className="flex space-x-4 mt-4">
                       <button
@@ -807,9 +722,7 @@ const TestimonialsSection: React.FC = () => {
               ))}
             </motion.div>
           ) : (
-            <p className="text-white text-lg">
-              No testimonials yet. Be the first to share your experience!
-            </p>
+            <p className="text-white text-lg">No testimonials yet. Be the first to share your experience!</p>
           )}
         </div>
       </div>

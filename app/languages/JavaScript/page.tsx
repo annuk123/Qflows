@@ -4,19 +4,27 @@ import Nav from "@/app/components/Nav/navbar";
 import CodeEditor from "./editor/code";
 //import CodeRunner from "../PythonVisualizer/page";// Python visualizer component
 import { on } from "events";
+import RustExecutor from "@/app/languages/Rust/page";
 
 interface VisualizerProps {
   isDarkMode: boolean;
   speed: number;
 }
 
-const JavaScriptVisualizer: React.FC<VisualizerProps> = ({ isDarkMode, speed }) => {
+const JavaScriptVisualizer: React.FC<VisualizerProps> = ({
+  isDarkMode,
+  speed,
+}) => {
   const callStackRef = useRef<HTMLUListElement>(null);
   const webApisRef = useRef<HTMLUListElement>(null);
   const callbackQueueRef = useRef<HTMLUListElement>(null);
 
   const handleRunCode = (code: string) => {
-    if (!callStackRef.current || !webApisRef.current || !callbackQueueRef.current) {
+    if (
+      !callStackRef.current ||
+      !webApisRef.current ||
+      !callbackQueueRef.current
+    ) {
       console.error("One or more elements are missing!");
       return;
     }
@@ -50,20 +58,23 @@ const JavaScriptVisualizer: React.FC<VisualizerProps> = ({ isDarkMode, speed }) 
     });
   };
 
-
-
   useEffect(() => {
     const handleRunJavaScriptCode = (event: CustomEvent<string>) => {
       handleRunCode(event.detail);
     };
-  
-    document.addEventListener("runJavaScriptCode", handleRunJavaScriptCode as EventListener);
-  
+
+    document.addEventListener(
+      "runJavaScriptCode",
+      handleRunJavaScriptCode as EventListener
+    );
+
     return () => {
-      document.removeEventListener("runJavaScriptCode", handleRunJavaScriptCode as EventListener);
+      document.removeEventListener(
+        "runJavaScriptCode",
+        handleRunJavaScriptCode as EventListener
+      );
     };
   }, [speed]);
-  
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 p-4">
@@ -127,17 +138,16 @@ const Visualizer = () => {
       <Nav
         isDarkMode={isDarkMode}
         toggleTheme={toggleTheme}
-        selectedLanguage={selectedLanguage}
+        selectedLanguage="JavaScript"
         onLanguageChange={setSelectedLanguage}
         speed={speed}
         onSpeedChange={setSpeed}
       />
       <CodeEditor
-      isDarkMode={isDarkMode}
-      speed={speed}
-      onSpeedChange={setSpeed}
-      
-        onRunCode={ (code) => {
+        isDarkMode={isDarkMode}
+        speed={speed}
+        onSpeedChange={setSpeed}
+        onRunCode={(code) => {
           // Pass code to the correct visualizer
           if (selectedLanguage === "JavaScript") {
             document.dispatchEvent(
@@ -148,28 +158,20 @@ const Visualizer = () => {
           }
         }}
       />
-      {selectedLanguage === "JavaScript" ? (
-        <JavaScriptVisualizer isDarkMode={isDarkMode} speed={speed} />
-      //  ) : selectedLanguage === "Python" ? (
-      //    <CodeRunner />
-       ) : (
-        <div className="p-4 text-center">
-          <h2 className="text-xl font-bold">
-            Visualizer for {selectedLanguage} is not available yet!
-          </h2>
-        </div>
-      )
-    }
+      {/* {selectedLanguage === "JavaScript" ? ( */}
+      <JavaScriptVisualizer isDarkMode={isDarkMode} speed={speed} />
+      {/* //  ) : selectedLanguage === "Rust" ? (
+      //    <RustExecutor />
+      //  ) : (
+      //   <div className="p-4 text-center">
+      //     <h2 className="text-xl font-bold">
+      //       Visualizer for {selectedLanguage} is not available yet!
+      //     </h2>
+      //   </div> */}
+      {/* )
+    } */}
     </div>
   );
 };
 
 export default Visualizer;
-
-
-
-
-
-
-
-

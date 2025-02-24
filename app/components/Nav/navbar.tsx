@@ -6,6 +6,7 @@ import MoonIcon from "../icons/moonicon";
 import Link from "next/link";
 import { AccountCircle as ProfileIcon } from "@mui/icons-material";
 import { GitHub as GitHubIcon } from "@mui/icons-material";
+import { useRouter } from 'next/navigation'
 
 interface NavProps {
   isDarkMode: boolean;
@@ -40,10 +41,14 @@ const Nav: React.FC<NavProps> = ({
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter(); // Initialize router
 
   const handleLanguageClick = (language: string) => {
     onLanguageChange(language);
     setDropdownOpen(false); // Close the dropdown after selection
+
+        // Navigate to a dynamic route based on selected language
+        router.push(`/languages/${language}`);
   };
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
