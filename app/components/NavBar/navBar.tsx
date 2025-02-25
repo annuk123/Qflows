@@ -317,6 +317,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
     >
       About
     </Link>
+    <Link
+            href="/feedback"
+            className={`text-sm sm:text-base ${
+              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
+            }`}
+          >
+            feedback
+          </Link>
   </nav>
 
     {/* Github section */}
