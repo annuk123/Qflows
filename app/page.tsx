@@ -4,6 +4,10 @@ import { ReactNode } from "react";
 import CodePreviewWithVideo from "./CodePreview/page";
 import TestimonialsSection from "./Testimonial/page";
 import Navbar from "./components/NavBar/navBar";
+import WhyChooseUs from "./WhyChooseUs/page";
+import Footer from "./Footer/page";
+import HowItWorks from "./HowItWorks/page";
+import Features from "./Features/page";
 // Custom Button Component
 
 const CustomButton = ({
@@ -89,7 +93,7 @@ export default function HomePage() {
       </section>
 
       {/* Interactive 3D Preview Section */}
-      <section className=" rounded-3xl shadow-lg mx-10">
+      <section className=" rounded-3xl shadow-lg mx-10 py-6">
         <h2 className="text-3xl font-bold text-center mb-8">
           Interactive Code Snippet
         </h2>
@@ -98,112 +102,31 @@ export default function HomePage() {
 
       {/* Features Grid Section */}
       <section className="py-20">
-        <h2 className="text-3xl font-bold text-center mb-10">Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-10">
-          {features.map((feature, index) => (
-            <CustomCard key={index}>
-              <h3 className="text-xl font-semibold text-cyan-400">
-                {feature.title}
-              </h3>
-              <p className="mt-2 text-gray-300">{feature.description}</p>
-            </CustomCard>
-          ))}
-        </div>
+        <Features/>
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 bg-gray-800  rounded-2xl shadow-lg mx-10">
-        <h2 className="text-3xl font-bold text-center mb-8">How It Works</h2>
-        <div className="space-y-8 ml-8">
-          {howItWorksSteps.map((step, index) => (
-            <div key={index} className="flex items-center space-x-6">
-              <span className="text-cyan-400 text-2xl font-bold">
-                {index + 1}
-              </span>
-
-              <div>
-                <h4 className="text-xl font-semibold text-white">
-                  {step.title}
-                </h4>
-                <p className="text-gray-300 mt-2">{step.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+      <section className="py-5">
+        <HowItWorks/>
       </section>
+
 
       {/* Testimonials Section */}
       <section className="py-20">
-        {/* <h2 className="text-3xl font-bold text-center mb-10">What Our Users Say</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 px-10">
-          {testimonials.map((testimonial, index) => (
-            <CustomCard key={index}>
-              <p className="text-gray-300">"{testimonial.feedback}"</p>
-              <h4 className="mt-4 font-semibold text-cyan-400">- {testimonial.name}</h4>
-            </CustomCard>
-          ))} */}
-
         <TestimonialsSection />
-        {/* </div> */}
+      </section> 
+
+      {/* Why Choose Us Section */}
+      <section className="py-3">
+        <WhyChooseUs/>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 text-center bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl mx-10">
-        <h2 className="text-4xl font-bold text-white">
-          Ready to See Your Code Like Never Before?
-        </h2>
-        <CustomButton className="mt-8 bg-gray-900 hover:bg-gray-800 text-white">
-          Start Now for Free!
-        </CustomButton>
+      {/* Footer Section */}
+      <section className="py-3">
+        <Footer/>
       </section>
     </div>
   );
 }
 
-const features = [
-  {
-    title: "Step-by-Step Code Execution",
-    description:
-      "See each line of your code come to life with our visual flow.",
-  },
-  {
-    title: "3D Visual Flow Representation",
-    description: "Interactive 3D representations for better understanding.",
-  },
-  {
-    title: "Multi-Language Support",
-    description:
-      "Supports various programming languages including JavaScript and Python.",
-  },
-];
 
-const howItWorksSteps = [
-  {
-    title: "Write Code",
-    description: "Use our intuitive code editor to write or paste your code.",
-  },
-  {
-    title: "Click Visualize",
-    description: "Hit the visualize button to see the magic happen.",
-  },
-  {
-    title: "Watch the Execution",
-    description:
-      "Experience real-time code execution with animations and visual flow.",
-  },
-];
-
-const testimonials = [
-  {
-    name: "Alex Smith",
-    feedback: "This tool completely changed the way I debug my code.",
-  },
-  {
-    name: "Priya Kumar",
-    feedback: "The 3D visuals are stunning and incredibly helpful.",
-  },
-  {
-    name: "John Doe",
-    feedback: "Best code visualizer I have ever used. Highly recommended!",
-  },
-];

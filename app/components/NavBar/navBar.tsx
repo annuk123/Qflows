@@ -4,8 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SunIcon from "../icons/sunicon";
 import MoonIcon from "../icons/moonicon";
-import Button from "@mui/material/Button";
-import { AccountCircle as ProfileIcon } from "@mui/icons-material";
+//import { AccountCircle as ProfileIcon } from "@mui/icons-material";
 import { GitHub as GitHubIcon } from "@mui/icons-material";
 
 interface NavbarProps {
@@ -18,21 +17,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 0) {
-  //       setIsNavFixed(true);
-  //     } else {
-  //       setIsNavFixed(false);
-  //     }
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
   useEffect(() => {
     // Check theme preference from localStorage and apply it
     const storedTheme = localStorage.getItem("theme");
@@ -146,20 +130,12 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           </Link>
 
           <Link
-            href="/OnlineCompiler"
+            href="/Docs"
             className={`text-sm sm:text-base ${
               isDarkMode ? "font-bold text-gray-500 hover:text-gray-200" : "hover:text-gray-600 font-bold"
             }`}
           >
-           Online Compiler
-          </Link>
-          <Link
-            href="/Docs"
-            className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
-            }`}
-          >
-            AI Tutor
+           What's New
           </Link>
 
           <Link
@@ -169,9 +145,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             }`}
           >
             feedback
-          </Link>
-          <Link href="/profile" className="rounded-full">
-            <ProfileIcon className="w-20 h-20" />
           </Link>
 
           <Link href={"https://github.com/annuk123/Qflows"} >
@@ -198,20 +171,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
 
 
 {/* mobile view */}
-        {/* Theme Toggle */}
-        <div className="flex items-center gap-4 lg:hidden">
-          <button
-            onClick={handleToggleTheme}
-            className="p-2 rounded-full hover:bg-opacity-20 hover:bg-gray-200 transition-colors duration-200 ml-12"
-            aria-label="Toggle dark mode"
-          >
-            {isDarkMode ? (
-              <SunIcon className="text-white " />
-            ) : (
-              <MoonIcon className="text-black" />
-            )}
-          </button>
-        </div>
 
 
 <div className="lg:hidden ">
@@ -294,7 +253,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
       Home
     </Link>
     <Link
-      href="/Tools/Visualizers"
+      href="/languages/JavaScript"
       className={`block text-lg font-semibold ${
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
@@ -307,16 +266,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
     >
-      Debugger
+      What's New
     </Link>
-    <Link
-      href="/Tools/About"
-      className={`block text-lg font-semibold ${
-        isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
-      }`}
-    >
-      About
-    </Link>
+
     <Link
             href="/feedback"
             className={`block text-lg font-semibold ${
@@ -343,23 +295,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   </div>
 
   {/* Profile Section */}
-  <div className="mt-8 flex items-center space-x-4">
-    <Link href="/profile">
-      <ProfileIcon
-        className={`w-12 h-12 rounded-full border-2 ${
-          isDarkMode ? "border-blue-400" : "border-blue-600"
-        }`}
-      />
-    </Link>
-    <Link
-      href="/profile"
-      className={`text-lg font-semibold ${
-        isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
-      }`}
-    >
-      Profile
-    </Link>
-  </div>
+
 
 
 </div>

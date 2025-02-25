@@ -28,7 +28,7 @@ const DocPage: React.FC = () => {
       <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       <header className="flex justify-center flex-col items-center w-full mt-4">
         <h1 className="text-4xl font-bold text-blue-600 mb-4">
-          Docs of Qflows
+          What's New of the Qflows
         </h1>
         <p className="justify-center flex flex-col w-full text-lg text-gray-700 items-center text-center">
           Uh-oh <br />
