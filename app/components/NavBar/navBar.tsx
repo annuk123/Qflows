@@ -319,8 +319,8 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
     </Link>
     <Link
             href="/feedback"
-            className={`text-sm sm:text-base ${
-              isDarkMode ? "font-bold text-gray-500 hover:text-gray-200"  : "hover:text-gray-600 font-bold"
+            className={`block text-lg font-semibold ${
+              isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
             }`}
           >
             feedback
