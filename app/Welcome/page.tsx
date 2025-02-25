@@ -1,5 +1,5 @@
 "use client";
-import Navbar from "../components/NavBar/page";
+import Navbar from "../components/NavBar/navBar";
 import React, { useEffect, useState } from "react";
 import { ReactNode } from "react";
 import CodePreviewWithVideo from "../CodePreview/page";

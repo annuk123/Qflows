@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../components/NavBar/page";
+import Navbar from "../components/NavBar/navBar";
 
 interface Testimonial {
   id: string;
@@ -53,143 +53,142 @@ const FeedbackSection: React.FC = () => {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
-//   const handleSubmitReview = async () => {
-//     if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
-//       alert("Please fill in all fields and upload a photo.");
-//       return;
-//     }
+  //   const handleSubmitReview = async () => {
+  //     if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
+  //       alert("Please fill in all fields and upload a photo.");
+  //       return;
+  //     }
 
-//     setIsUploading(true);
+  //     setIsUploading(true);
 
-//     try {
-//       // Upload image to Cloudinary
-//       const formData = new FormData();
-//       formData.append("file", userPhoto);
-//       formData.append("upload_preset", "Qflows");
+  //     try {
+  //       // Upload image to Cloudinary
+  //       const formData = new FormData();
+  //       formData.append("file", userPhoto);
+  //       formData.append("upload_preset", "Qflows");
 
-//       const uploadResponse = await axios.post(
-//         "https://api.cloudinary.com/v1_1/dpiobntr2/image/upload",
-//         formData
-//       );
+  //       const uploadResponse = await axios.post(
+  //         "https://api.cloudinary.com/v1_1/dpiobntr2/image/upload",
+  //         formData
+  //       );
 
-//       const avatarUrl = uploadResponse.data.secure_url;
+  //       const avatarUrl = uploadResponse.data.secure_url;
 
-//       // Submit review
-//       await axios.post("/api/testimonials", {
-//         userName,
-//         place: userPlace,
-//         rating: userRating,
-//         review: userReview,
-//         avatarUrl,
-//       });
+  //       // Submit review
+  //       await axios.post("/api/testimonials", {
+  //         userName,
+  //         place: userPlace,
+  //         rating: userRating,
+  //         review: userReview,
+  //         avatarUrl,
+  //       });
 
-//       // Refresh testimonials
-//       const { data } = await axios.get<Testimonial[]>("/api/testimonials");
-//       setTestimonials(data);
+  //       // Refresh testimonials
+  //       const { data } = await axios.get<Testimonial[]>("/api/testimonials");
+  //       setTestimonials(data);
 
-//       // Reset form
-//       setUserName("");
-//       setUserPlace("");
-//       setUserRating(0);
-//       setUserReview("");
-//       setUserPhoto(null);
-//       setPhotoPreview(null);
-//       setShowPopup(true);
+  //       // Reset form
+  //       setUserName("");
+  //       setUserPlace("");
+  //       setUserRating(0);
+  //       setUserReview("");
+  //       setUserPhoto(null);
+  //       setPhotoPreview(null);
+  //       setShowPopup(true);
 
-//       setTimeout(() => setShowPopup(false), 3000);
-//     } catch (error) {
-//       console.error("Error submitting review:", error);
-//       alert("Something went wrong. Please try again.");
-//     } finally {
-//       setIsUploading(false);
-//     }
+  //       setTimeout(() => setShowPopup(false), 3000);
+  //     } catch (error) {
+  //       console.error("Error submitting review:", error);
+  //       alert("Something went wrong. Please try again.");
+  //     } finally {
+  //       setIsUploading(false);
+  //     }
 
-// };
+  // };
 
-
-const handleSubmitReview = async () => {
-  if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
-    alert("Please fill in all fields and upload a photo.");
-    return;
-  }
-
-  setIsUploading(true);
-
-  try {
-    // Upload image to Cloudinary
-    const formData = new FormData();
-    formData.append("file", userPhoto);
-    formData.append("upload_preset", "Qflows");
-
-    const uploadResponse = await axios.post(
-      "https://api.cloudinary.com/v1_1/dpiobntr2/image/upload",
-      formData
-    );
-
-    console.log("Cloudinary Response:", uploadResponse.data);
-
-    const avatarUrl = uploadResponse.data.secure_url;
-    if (!avatarUrl) {
-      throw new Error("Failed to get avatar URL from Cloudinary");
+  const handleSubmitReview = async () => {
+    if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
+      alert("Please fill in all fields and upload a photo.");
+      return;
     }
 
-    // Get userId from session (if using authentication)
-    ///const userId = session?.user?.id || "guest"; // Change this based on your auth system
+    setIsUploading(true);
 
-    // Construct payload
-    const payload = {
-      userName,
-      place: userPlace,
-      rating: userRating,
-      review: userReview,
-      avatarUrl,
-      //userId, // Include userId
-    };
+    try {
+      // Upload image to Cloudinary
+      const formData = new FormData();
+      formData.append("file", userPhoto);
+      formData.append("upload_preset", "Qflows");
 
-    console.log("Submitting payload:", payload);
+      const uploadResponse = await axios.post(
+        "https://api.cloudinary.com/v1_1/dpiobntr2/image/upload",
+        formData
+      );
 
-    // Submit review to the API
-    const response = await axios.post("/api/testimonials", payload);
+      console.log("Cloudinary Response:", uploadResponse.data);
 
-    console.log("API Response:", response.data);
+      const avatarUrl = uploadResponse.data.secure_url;
+      if (!avatarUrl) {
+        throw new Error("Failed to get avatar URL from Cloudinary");
+      }
 
-    // Refresh testimonials
-    const { data } = await axios.get<Testimonial[]>("/api/testimonials");
-    setTestimonials(data);
+      // Get userId from session (if using authentication)
+      ///const userId = session?.user?.id || "guest"; // Change this based on your auth system
 
-    // Reset form
-    setUserName("");
-    setUserPlace("");
-    setUserRating(0);
-    setUserReview("");
-    setUserPhoto(null);
-    setPhotoPreview(null);
-    setShowPopup(true);
+      // Construct payload
+      const payload = {
+        userName,
+        place: userPlace,
+        rating: userRating,
+        review: userReview,
+        avatarUrl,
+        //userId, // Include userId
+      };
 
-    setTimeout(() => setShowPopup(false), 3000);
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error("API Error:", error.response?.data || error.message);
-    } else {
-      console.error("Unexpected Error:", error);
+      console.log("Submitting payload:", payload);
+
+      // Submit review to the API
+      const response = await axios.post("/api/testimonials", payload);
+
+      console.log("API Response:", response.data);
+
+      // Refresh testimonials
+      const { data } = await axios.get<Testimonial[]>("/api/testimonials");
+      setTestimonials(data);
+
+      // Reset form
+      setUserName("");
+      setUserPlace("");
+      setUserRating(0);
+      setUserReview("");
+      setUserPhoto(null);
+      setPhotoPreview(null);
+      setShowPopup(true);
+
+      setTimeout(() => setShowPopup(false), 3000);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error("API Error:", error.response?.data || error.message);
+      } else {
+        console.error("Unexpected Error:", error);
+      }
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsUploading(false);
     }
-    alert("Something went wrong. Please try again.");
-  } finally {
-    setIsUploading(false);
-  }
-};
-
-
-
+  };
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-// };
+  // };
 
   return (
     <section className="bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen w-full flex flex-col items-center">
-      <Navbar isDarkMode={isDarkMode} toggleTheme={() => setIsDarkMode(!isDarkMode)} />
+      <Navbar
+        isDarkMode={isDarkMode}
+        toggleTheme={() => setIsDarkMode(!isDarkMode)}
+      />
 
       <div className="max-w-4xl mx-auto text-center text-white mt-10 py-12">
         <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-2xl mt-8">
@@ -210,9 +209,17 @@ const handleSubmitReview = async () => {
             placeholder="Your Place"
             className="w-full rounded-lg p-3 bg-gray-700 text-white mb-4"
           />
-          <input type="file" accept="image/jpeg, image/png" onChange={handlePhotoChange} />
+          <input
+            type="file"
+            accept="image/jpeg, image/png"
+            onChange={handlePhotoChange}
+          />
           {photoPreview && (
-            <img src={photoPreview} alt="Preview" className="mt-4 w-24 h-24 rounded-full" />
+            <img
+              src={photoPreview}
+              alt="Preview"
+              className="mt-4 w-24 h-24 rounded-full"
+            />
           )}
 
           <div className="flex justify-center items-center space-x-2 my-4">
@@ -239,7 +246,11 @@ const handleSubmitReview = async () => {
             onClick={handleSubmitReview}
             disabled={isUploading}
             className={`mt-6 bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded-lg 
-              ${isUploading ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-500 transition"}`}
+              ${
+                isUploading
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-yellow-500 transition"
+              }`}
           >
             {isUploading ? "Submitting..." : "Submit Review"}
           </button>
@@ -250,7 +261,9 @@ const handleSubmitReview = async () => {
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-60">
           <div className="bg-white text-gray-900 p-6 rounded-lg shadow-xl">
             <h3 className="text-xl font-bold">🎉 Thank You! 🎉</h3>
-            <p className="text-gray-600 mt-2">Your review has been submitted successfully.</p>
+            <p className="text-gray-600 mt-2">
+              Your review has been submitted successfully.
+            </p>
           </div>
         </div>
       )}

@@ -114,6 +114,8 @@ import CodeMirror from "@uiw/react-codemirror";
 import { rust } from "@codemirror/lang-rust";
 import { motion } from "framer-motion"; // Animation
 import Nav from "../../components/Nav/navbar";
+import { Handle, Position, useNodesState } from "reactflow";
+import * as d3 from "d3";
 
 export default function RustExecutor() {
   const [code, setCode] = useState(
@@ -124,20 +126,121 @@ export default function RustExecutor() {
   const [selectedLanguage, setSelectedLanguage] = useState("Rust");
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Loader
+  const [nodes, setNodes] = useNodesState([]);
+  interface Step {
+    message: string;
+  }
+  
+  interface MemoryItem {
+    type: "stack" | "heap";
+    value: string;
+  }
+  
+  interface GraphNode {
+    id: string;
+    x: number;
+    y: number;
+  }
+  
+  interface GraphLink {
+    source: { x: number; y: number };
+    target: { x: number; y: number };
+  }
 
   const executeCode = async () => {
-    setIsLoading(true);
     try {
-      const res = await axios.post("/api/execute-rust", { code });
-      console.log("API Response:", res.data);
-      setOutput(res.data.output || res.data.error);
-      setSteps(res.data.steps);
+        const res = await axios.post("/api/execute-rust", { code });
+
+        console.log("API Response:", res.data); // Debugging API response
+
+        setOutput(res.data.output || res.data.error);
+        setSteps(res.data.steps);
+
+        if (res.data.memory) {
+            visualizeHeapAndStack(res.data.memory);
+        } else {
+            console.warn("Memory data is missing in response.");
+        }
+
+        if (res.data.executionGraph) {
+            animateExecutionGraph(res.data.executionGraph);
+        } else {
+            console.warn("Execution graph data is missing in response.");
+        }
     } catch (error) {
-      console.error("Execution error:", error);
-      setOutput("Error executing code");
+        console.error("Execution error:", error);
+        setOutput("Error executing code");
     }
-    setIsLoading(false);
+};
+
+useEffect(() => {
+  if (steps.length > 0) {
+    const newNodes = steps.map((step, index) => ({
+      id: `${index}`,
+      data: { label: step.message },
+      position: { x: 50, y: index * 100 },
+    }));
+    setNodes(newNodes);
+  }
+}, [steps]);  // <-- Only update when steps change
+
+
+
+  const visualizeHeapAndStack = (memoryData: any) => {
+    if (!Array.isArray(memoryData) || memoryData.length === 0) {
+        console.warn("Invalid memory data for heap and stack visualization.");
+        return;
+    }
+
+    const svg = d3.select("#heap-stack").html("").append("svg")
+        .attr("width", 400)
+        .attr("height", 300);
+
+    const rects = svg.selectAll("rect")
+        .data(memoryData)
+        .enter()
+        .append("rect")
+        .attr("x", (_, i) => i * 50)
+        .attr("y", d => d.type === "stack" ? 50 : 150)
+        .attr("width", 40)
+        .attr("height", 40)
+        .attr("fill", d => d.type === "stack" ? "blue" : "red");
+
+    rects.append("title").text(d => `Value: ${d.value}`);
+};
+
+
+
+  const animateExecutionGraph = (graphData: { nodes: GraphNode[]; links: GraphLink[] }) => {
+    const svg = d3
+      .select("#execution-graph")
+      .html("")
+      .append("svg")
+      .attr("width", 500)
+      .attr("height", 300);
+  
+    svg
+      .selectAll("line")
+      .data(graphData.links)
+      .enter()
+      .append("line")
+      .attr("x1", (d) => d.source.x)
+      .attr("y1", (d) => d.source.y)
+      .attr("x2", (d) => d.target.x)
+      .attr("y2", (d) => d.target.y)
+      .attr("stroke", "black");
+  
+    svg
+      .selectAll("circle")
+      .data(graphData.nodes)
+      .enter()
+      .append("circle")
+      .attr("cx", (d) => d.x)
+      .attr("cy", (d) => d.y)
+      .attr("r", 10)
+      .attr("fill", "green");
   };
+
 
   useEffect(() => {
     if (isDarkMode) {
@@ -173,20 +276,7 @@ export default function RustExecutor() {
         </h2>
 
         {/* Code Editor */}
-        {/* <motion.div
-          className="border rounded-lg overflow-hidden shadow-lg"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <CodeMirror
-            value={code}
-            height="250px"
-            extensions={[rust()]}
-            onChange={(value) => setCode(value)}
-            className="border rounded-md text-black"
-          />
-        </motion.div> */}
+
 
         <div className="flex gap-2 justify-self-end mb-3 relative">
 
@@ -265,32 +355,64 @@ export default function RustExecutor() {
         </motion.div>
 
         {/* Execution Steps Visualization */}
+
+<motion.div
+  className="mt-6 p-6 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-lg backdrop-blur-lg border border-gray-700"
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5 }}
+>
+  <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+    <span className="text-blue-400">🚀 Execution Steps:</span>
+  </h3>
+
+  {steps.length > 0 ? (
+    <div className="space-y-3">
+      {steps.map((step, index) => (
         <motion.div
-          className="mt-6 p-4 bg-gray-800 rounded-lg shadow-md"
+          key={index}
+          className="p-4 bg-blue-500 rounded-lg shadow-md text-white text-center text-lg font-medium tracking-wide transform hover:scale-105 transition-all duration-300"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ delay: index * 0.15, type: "spring", stiffness: 100 }}
         >
-          <h3 className="text-lg font-semibold">Execution Steps:</h3>
-          {steps.length > 0 ? (
-            <div className="space-y-2">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  className="p-3 bg-blue-500 rounded-md shadow-md text-white text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                >
-                  {step.message}
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-400">No execution steps yet.</p>
-          )}
+          {step.message}
         </motion.div>
-      </div>
+      ))}
     </div>
+  ) : (
+    <p className="text-gray-400 text-center text-lg">No execution steps yet. Run some code! 💡</p>
+  )}
+</motion.div>
+
+
+
+{/* Heap & Stack Section */}
+<h3 className="text-xl font-bold mt-6 text-gray-800 dark:text-white flex items-center gap-2">
+  <span className="text-pink-500">📦 Heap & Stack Visualization</span>
+</h3>
+
+<div
+  id="heap-stack"
+  className="border p-6 rounded-xl bg-white dark:bg-gray-900 shadow-lg mt-4 transition-all duration-300 hover:shadow-2xl"
+></div>
+
+{/* Execution Graph */}
+<h3 className="text-xl font-bold mt-6 text-gray-800 dark:text-white flex items-center gap-2">
+  <span className="text-green-500">🔗 Execution Graph</span>
+</h3>
+
+<div
+  id="execution-graph"
+  className="border p-6 rounded-xl bg-white dark:bg-gray-900 shadow-lg mt-4 transition-all duration-300 hover:shadow-2xl"
+></div>
+{/* 
+<pre className="mt-4 p-3 bg-gray-100 border rounded">{output}</pre>
+      <h3 className="text-lg font-bold mt-4">Heap & Stack Visualization</h3>
+      <div id="heap-stack" className="border p-4 rounded-md bg-white"></div>
+      <h3 className="text-lg font-bold mt-4">Execution Flow</h3>
+      <div id="execution-graph" className="border p-4 rounded-md bg-white"></div> */}
+</div>
+</div>
   );
 }

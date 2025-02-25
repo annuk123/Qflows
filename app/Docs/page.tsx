@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useEffect } from "react";
-import Navbar from "../components/NavBar/page";
+import Navbar from "../components/NavBar/navBar";
 
 const DocPage: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = React.useState(false);
