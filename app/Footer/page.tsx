@@ -18,16 +18,16 @@ const Footer: React.FC = () => {
 
         {/* Right Section - Social Links */}
         <div className="mt-4 md:mt-0 flex space-x-4">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
+          <a href="https://x.com/Annu66126617" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
             <FaTwitter size={20} />
           </a>
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
+          <a href="https://github.com/annuk123" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
             <FaGithub size={20} />
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
+          <a href="https://www.linkedin.com/in/annu-kumari-540337237/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
             <FaLinkedin size={20} />
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
+          <a href="https://www.instagram.com/annuk987/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-cyan-400 transition">
             <FaInstagram size={20} />
           </a>
         </div>

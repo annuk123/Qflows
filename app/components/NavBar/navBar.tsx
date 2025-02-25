@@ -46,23 +46,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
     setIsClient(true); // Ensure it's client-side rendering
   }, []);
 
-  const handleLoginRedirect = () => {
-    if (isClient) {
-      router.push("/signIn");
-    }
-  };
-  const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Remove token on logout
-    setIsLoggedIn(false); // Update login state
-    router.push("/"); // Redirect to homepage after logout
-  };
+
 
 
 
   return (
       <nav
       className= {`${
-        isDarkMode ? "bg-gray-900 text-white" : "bg-blue-300 text-black"
+        isDarkMode ? "bg-gray-900 text-white" : "bg-gray-900 text-black"
       } bg-black text-white  p-4 flex justify-between items-center transition-all duration-300 fixed w-full z-10 top-0 `}
   >
         {/* Logo */}
@@ -98,7 +89,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
             fontWeight="normal"
             fill="#0056D2"
           >
-            flow
+            flows
           </text>
           <path
   d="M 5 54 C 50 10, 80 100, 120 55"
