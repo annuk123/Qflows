@@ -7,25 +7,25 @@ const features = [
   {
     title: "See Code Execution in Action",
     description:
-      "Unlike AI, which just explains, our app shows **real-time execution flow** with step-by-step tracking.",
+      "Unlike AI, which just explains, our app shows real-time execution flow with step-by-step tracking.",
     icon: <PlayCircle className="text-purple-500" size={30} />, 
   },
   {
     title: "Memory & Heap Visualization",
     description:
-      "Track **stack vs. heap allocation** with stunning visual representation, making complex concepts easy.",
+      "Track stack vs. heap allocation with stunning visual representation, making complex concepts easy.",
     icon: <Layers className="text-blue-500" size={30} />, 
   },
   {
     title: "Multi-Language Debugging",
     description:
-      "AI mostly explains code in text, but we offer **real-time execution** across multiple languages, starting with Rust.",
+      "AI mostly explains code in text, but we offer real-time execution across multiple languages, starting with Rust.",
     icon: <Code className="text-green-500" size={30} />, 
   },
   {
     title: "AI Gives Answers, We Show Execution",
     description:
-      "See how recursion, loops, and memory work step by step—perfect for **learning and interviews.**",
+      "See how recursion, loops, and memory work step by step—perfect for learning and interviews.",
     icon: <Eye className="text-yellow-500" size={30} />, 
   },
 ];
@@ -43,7 +43,7 @@ export default function WhyChooseUs() {
           AI Explains, But We <span className="text-cyan-400">Visualize & Execute</span>
         </motion.h2>
         <p className="text-lg text-gray-400 mb-8">
-          Unlike AI tools that only generate text-based explanations, our app **runs** your actual Rust code and **visually represents execution.**
+          Unlike AI tools that only generate text-based explanations, our app <span className="font-bold">runs</span> your actual any programming language of code and <span className="font-bold">visually represents execution.</span>
         </p>
       </div>
 

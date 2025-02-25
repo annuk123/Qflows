@@ -591,7 +591,7 @@ const TestimonialsSection: React.FC = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-gray-800 to-gray-900 py-16 px-6">
+    <section className="bg-gradient-to-br from-gray-900 to-gray-950 py-16 px-6">
       <div className="max-w-6xl mx-auto text-center text-white">
         <h2 className="text-4xl font-bold mb-8">What Our Users Say</h2>
 
@@ -606,7 +606,7 @@ const TestimonialsSection: React.FC = () => {
               {testimonials.map((testimonial) => (
                 <div
                   key={testimonial.id}
-                  className="relative snap-center flex-shrink-0 bg-white text-gray-800 rounded-xl shadow-lg p-6 max-w-xs transition-transform hover:scale-105 hover:shadow-xl"
+                  className="relative snap-center flex-shrink-0 bg-gray-800 text-white rounded-xl shadow-lg p-6 max-w-xs transition-transform hover:scale-105 hover:shadow-xl"
                 >
                   <div className="absolute top-3 right-3 flex space-x-2">
                     <Pencil
@@ -614,7 +614,7 @@ const TestimonialsSection: React.FC = () => {
                       onClick={() => handleEditReview(testimonial)}
                     />
                     <Trash
-                      className="w-5 h-5 text-gray-700 cursor-pointer hover:text-red-700 mb-5"
+                      className="w-5 h-5 text-gray-600 cursor-pointer hover:text-red-700 mb-5"
                       onClick={() => handleDeleteReview(testimonial.id)}
                     />
                   </div>
@@ -649,10 +649,10 @@ const TestimonialsSection: React.FC = () => {
                       onChange={(e) =>
                         setEditedReview({ ...editedReview, userName: e.target.value })
                       }
-                      className="border p-1 rounded w-full"
+                      className="border p-1 bg-gray-800  rounded w-full"
                     />
                   ) : (
-                      <h3 className="font-semibold text-lg text-gray-900 mt-7">
+                      <h3 className="font-semibold text-lg text-cyan-500 mt-7">
                         {testimonial.userName}
                       </h3>
                     )}
@@ -664,10 +664,10 @@ const TestimonialsSection: React.FC = () => {
                       onChange={(e) =>
                         setEditedReview({ ...editedReview, place: e.target.value })
                       }
-                      className="border p-1 rounded w-full mt-2"
+                      className="border p-1 bg-gray-800  rounded w-full mt-2"
                     />
                   ) : (
-                      <p className="text-sm text-gray-500">{testimonial.place}</p>
+                      <p className="text-sm text-gray-300">{testimonial.place}</p>
                     )}
                     </div>
                   </div>
@@ -679,10 +679,10 @@ const TestimonialsSection: React.FC = () => {
                   onChange={(e) =>
                     setEditedReview({ ...editedReview, review: e.target.value })
                   }
-                  className="border p-1 rounded w-full"
+                  className="border p-1 bg-gray-800 rounded w-full"
                 />
               ) : (
-                  <p className="text-sm text-gray-700 italic">{testimonial.review}</p>
+                  <p className="text-sm text-gray-300 italic">{testimonial.review}</p>
                 )}
 
                   {/* Rating */}
