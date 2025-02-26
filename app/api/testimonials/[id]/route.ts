@@ -58,37 +58,6 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
   }
 }
 
-// ✅ DELETE: Remove a testimonial (Anyone can delete)
-// export async function DELETE(req: Request) {
-//   try {
-//     const url = new URL(req.url);
-//     const id = url.pathname.split("/").pop(); // Extracts ID from "/api/testimonials/{id}"
-
-//     if (!id) {
-//       return NextResponse.json({ error: "Testimonial ID is required" }, { status: 400 });
-//     }
-
-//     const numericId = parseInt(id, 10);
-//     if (isNaN(numericId)) {
-//       return NextResponse.json({ error: "Invalid testimonial ID" }, { status: 400 });
-//     }
-
-//     // ✅ Check if testimonial exists
-//     const existingTestimonial = await prisma.testimonial.findUnique({ where: { id: numericId } });
-//     if (!existingTestimonial) {
-//       return NextResponse.json({ error: "Testimonial not found" }, { status: 404 });
-//     }
-
-//     // ✅ Delete testimonial (Anyone can delete)
-//     await prisma.testimonial.delete({ where: { id: numericId } });
-
-//     return NextResponse.json({ message: "Testimonial deleted successfully" }, { status: 200 });
-//   } catch (error) {
-//     console.error("Error deleting testimonial:", error);
-//     return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
-//   }
-// }
-
 
 export async function DELETE(req: Request) {
   try {
@@ -119,3 +88,6 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
   }
 }
+
+
+
