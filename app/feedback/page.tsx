@@ -252,7 +252,7 @@ const FeedbackSection: React.FC = () => {
                   : "hover:bg-yellow-500 transition"
               }`}
           >
-            {isUploading ? "Submitting..." : "Submit Review"}
+            {isUploading ? "Submitting" : "Submit Review"}
           </button>
         </div>
       </div>

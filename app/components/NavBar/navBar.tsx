@@ -236,7 +236,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
   {/* Navigation Links */}
   <nav className="mt-16 space-y-6">
     <Link
-      href="/Welcome"
+      href="/"
       className={`block text-lg font-semibold ${
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
@@ -252,7 +252,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
       Visualizers
     </Link>
     <Link
-      href="/Tools/Docs"
+      href="/Docs"
       className={`block text-lg font-semibold ${
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
@@ -276,7 +276,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleTheme }) => {
           <GitHubIcon />
           </Link>
     <Link
-      href="/profile"
+      href="https://github.com/annuk123/Qflows"
       className={`text-lg font-semibold ${
         isDarkMode ? "text-blue-400 hover:text-blue-300" : "text-blue-600 hover:text-blue-500"
       }`}
