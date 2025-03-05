@@ -28,7 +28,7 @@ const TestimonialsSection: React.FC = () => {
 
   useEffect(() => {
     //axios.defaults.baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
     axios.get(`${BASE_URL}/api/testimonials`)
   .then(response => console.log(response.data))
   .catch(error => console.error("Error fetching testimonials:", error));
