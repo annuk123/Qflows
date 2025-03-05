@@ -26,9 +26,12 @@ const FeedbackSection: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    axios.defaults.baseURL =
-      process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-
+    // axios.defaults.baseURL =
+    //   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+    axios.get(`${BASE_URL}/api/testimonials`)
+  .then(response => console.log(response.data))
+  .catch(error => console.error("Error fetching testimonials:", error));
     async function fetchTestimonials() {
       try {
         const { data } = await axios.get<Testimonial[]>("/api/testimonials");
