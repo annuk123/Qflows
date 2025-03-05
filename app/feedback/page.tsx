@@ -56,59 +56,6 @@ const FeedbackSection: React.FC = () => {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
-  //   const handleSubmitReview = async () => {
-  //     if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
-  //       alert("Please fill in all fields and upload a photo.");
-  //       return;
-  //     }
-
-  //     setIsUploading(true);
-
-  //     try {
-  //       // Upload image to Cloudinary
-  //       const formData = new FormData();
-  //       formData.append("file", userPhoto);
-  //       formData.append("upload_preset", "Qflows");
-
-  //       const uploadResponse = await axios.post(
-  //         "https://api.cloudinary.com/v1_1/dpiobntr2/image/upload",
-  //         formData
-  //       );
-
-  //       const avatarUrl = uploadResponse.data.secure_url;
-
-  //       // Submit review
-  //       await axios.post("/api/testimonials", {
-  //         userName,
-  //         place: userPlace,
-  //         rating: userRating,
-  //         review: userReview,
-  //         avatarUrl,
-  //       });
-
-  //       // Refresh testimonials
-  //       const { data } = await axios.get<Testimonial[]>("/api/testimonials");
-  //       setTestimonials(data);
-
-  //       // Reset form
-  //       setUserName("");
-  //       setUserPlace("");
-  //       setUserRating(0);
-  //       setUserReview("");
-  //       setUserPhoto(null);
-  //       setPhotoPreview(null);
-  //       setShowPopup(true);
-
-  //       setTimeout(() => setShowPopup(false), 3000);
-  //     } catch (error) {
-  //       console.error("Error submitting review:", error);
-  //       alert("Something went wrong. Please try again.");
-  //     } finally {
-  //       setIsUploading(false);
-  //     }
-
-  // };
-
   const handleSubmitReview = async () => {
     if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
       alert("Please fill in all fields and upload a photo.");

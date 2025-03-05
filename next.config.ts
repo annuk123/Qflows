@@ -13,8 +13,7 @@ const nextConfig: NextConfig = {
   },
   
   env: {
-    GITHUB_ID: process.env.GITHUB_ID || '', // Use descriptive names here
-    GITHUB_SECRET: process.env.GITHUB_SECRET || '', // Use descriptive names here
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
   },
 
   webpack(config, { isServer }) {
