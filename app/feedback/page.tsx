@@ -13,6 +13,8 @@ interface Testimonial {
   review: string;
 }
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
+
 const FeedbackSection: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [userRating, setUserRating] = useState(0);
@@ -25,16 +27,11 @@ const FeedbackSection: React.FC = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // ✅ Fetch Testimonials
   useEffect(() => {
-    // axios.defaults.baseURL =
-    //   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-    const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
-    axios.get(`${BASE_URL}/api/testimonials`)
-  .then(response => console.log(response.data))
-  .catch(error => console.error("Error fetching testimonials:", error));
     async function fetchTestimonials() {
       try {
-        const { data } = await axios.get<Testimonial[]>("/api/testimonials");
+        const { data } = await axios.get<Testimonial[]>(`${BASE_URL}/api/testimonials`);
         setTestimonials(data);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
@@ -43,6 +40,7 @@ const FeedbackSection: React.FC = () => {
     fetchTestimonials();
   }, []);
 
+  // ✅ Handle Photo Upload
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -56,15 +54,27 @@ const FeedbackSection: React.FC = () => {
     setPhotoPreview(URL.createObjectURL(file));
   };
 
+  // ✅ Handle Review Submission
   const handleSubmitReview = async () => {
+    console.log("Function triggered");
     if (!userName || !userRating || !userReview || !userPlace || !userPhoto) {
       alert("Please fill in all fields and upload a photo.");
       return;
     }
 
-    setIsUploading(true);
+    // setIsUploading(true);
 
     try {
+      setIsUploading(true);
+      // Get or create userId
+      let userId = localStorage.getItem("userId");
+      if (!userId) {
+        userId = crypto.randomUUID();
+        localStorage.setItem("userId", userId);
+      }
+
+
+
       // Upload image to Cloudinary
       const formData = new FormData();
       formData.append("file", userPhoto);
@@ -75,35 +85,35 @@ const FeedbackSection: React.FC = () => {
         formData
       );
 
-      console.log("Cloudinary Response:", uploadResponse.data);
-
       const avatarUrl = uploadResponse.data.secure_url;
-      if (!avatarUrl) {
-        throw new Error("Failed to get avatar URL from Cloudinary");
-      }
+      if (!avatarUrl) throw new Error("Failed to upload image");
 
-      // Get userId from session (if using authentication)
-      ///const userId = session?.user?.id || "guest"; // Change this based on your auth system
+      console.log("Retrieved User ID from Local Storage:", localStorage.getItem("userId"));
+console.log("New Review User ID:", userId);
+console.log("Submitting Review Payload:", {
+  userId,
+  userName,
+  place: userPlace,
+  rating: userRating,
+  review: userReview,
+  avatarUrl,
+});
 
-      // Construct payload
+
+      // Submit review to API
       const payload = {
+        userId,
         userName,
         place: userPlace,
         rating: userRating,
         review: userReview,
         avatarUrl,
-        //userId, // Include userId
       };
 
-      console.log("Submitting payload:", payload);
-
-      // Submit review to the API
-      const response = await axios.post("/api/testimonials", payload);
-
-      console.log("API Response:", response.data);
+      await axios.post(`${BASE_URL}/api/testimonials`, payload);
 
       // Refresh testimonials
-      const { data } = await axios.get<Testimonial[]>("/api/testimonials");
+      const { data } = await axios.get<Testimonial[]>(`${BASE_URL}/api/testimonials`);
       setTestimonials(data);
 
       // Reset form
@@ -117,34 +127,30 @@ const FeedbackSection: React.FC = () => {
 
       setTimeout(() => setShowPopup(false), 3000);
     } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error("API Error:", error.response?.data || error.message);
-      } else {
-        console.error("Unexpected Error:", error);
-      }
+      console.error("API Error:", error);
       alert("Something went wrong. Please try again.");
     } finally {
       setIsUploading(false);
     }
   };
 
+
+  useEffect(() => {
+    console.log("Updated Testimonials:", testimonials);
+  }, [testimonials]);
+  
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-  // };
 
   return (
     <section className="bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen w-full flex flex-col items-center">
-      <Navbar
-        isDarkMode={isDarkMode}
-        toggleTheme={() => setIsDarkMode(!isDarkMode)}
-      />
+      <Navbar isDarkMode={isDarkMode} toggleTheme={() => setIsDarkMode(!isDarkMode)} />
 
       <div className="max-w-4xl mx-auto text-center text-white mt-10 py-12">
         <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-full max-w-2xl mt-8">
-          <h3 className="text-xl font-semibold mb-6">
-            Loved using our tool? Rate us!
-          </h3>
+          <h3 className="text-xl font-semibold mb-6">Loved using our tool? Rate us!</h3>
           <input
             type="text"
             value={userName}
@@ -159,18 +165,8 @@ const FeedbackSection: React.FC = () => {
             placeholder="Your Place"
             className="w-full rounded-lg p-3 bg-gray-700 text-white mb-4"
           />
-          <input
-            type="file"
-            accept="image/jpeg, image/png"
-            onChange={handlePhotoChange}
-          />
-          {photoPreview && (
-            <img
-              src={photoPreview}
-              alt="Preview"
-              className="mt-4 w-24 h-24 rounded-full"
-            />
-          )}
+          <input type="file" accept="image/jpeg, image/png" onChange={handlePhotoChange} />
+          {photoPreview && <img src={photoPreview} alt="Preview" className="mt-4 w-24 h-24 rounded-full" />}
 
           <div className="flex justify-center items-center space-x-2 my-4">
             {[...Array(5)].map((_, index) => (
@@ -195,12 +191,9 @@ const FeedbackSection: React.FC = () => {
           <button
             onClick={handleSubmitReview}
             disabled={isUploading}
-            className={`mt-6 bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded-lg 
-              ${
-                isUploading
-                  ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-yellow-500 transition"
-              }`}
+            className={`mt-6 bg-yellow-400 text-gray-900 font-bold py-2 px-6 rounded-lg ${
+              isUploading ? "opacity-50 cursor-not-allowed" : "hover:bg-yellow-500 transition"
+            }`}
           >
             {isUploading ? "Submitting" : "Submit Review"}
           </button>
@@ -211,9 +204,7 @@ const FeedbackSection: React.FC = () => {
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-60">
           <div className="bg-white text-gray-900 p-6 rounded-lg shadow-xl">
             <h3 className="text-xl font-bold">🎉 Thank You! 🎉</h3>
-            <p className="text-gray-600 mt-2">
-              Your review has been submitted successfully.
-            </p>
+            <p className="text-gray-600 mt-2">Your review has been submitted successfully.</p>
           </div>
         </div>
       )}

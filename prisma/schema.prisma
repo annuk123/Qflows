@@ -14,5 +14,6 @@ model Testimonial {
   review    String
   createdAt DateTime @default(now())
   place     String?
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
+  userId    String
 }

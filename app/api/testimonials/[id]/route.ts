@@ -2,34 +2,25 @@ import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-// ✅ PATCH: Update a testimonial (Anyone can update)
-export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
-  const params = await context.params;
-  console.log("Received params:", params); // Debugging log
+// ✅ PATCH: Update a testimonial
+export async function PATCH(req: NextRequest) {
+  const id = req.nextUrl.pathname.split("/").pop(); // Extracts ID from URL
 
-  if (!params?.id) {
+  if (!id) {
     return NextResponse.json({ message: "Testimonial ID is required" }, { status: 400 });
   }
 
-  const testimonialId = parseInt(params.id, 10);
-  if (isNaN(testimonialId)) {
-    return NextResponse.json({ message: "Invalid testimonial ID" }, { status: 400 });
-  }
-
   try {
-    // Find the testimonial
-    const existingTestimonial = await prisma.testimonial.findUnique({
-      where: { id: testimonialId },
-    });
+    // ✅ Check if testimonial exists
+    const existingTestimonial = await prisma.testimonial.findUnique({ where: { id } });
 
     if (!existingTestimonial) {
       return NextResponse.json({ message: "Testimonial not found" }, { status: 404 });
     }
 
-    // ✅ Validate request body (Ensures only valid fields are updated)
+    // ✅ Validate request body
     const body = await req.json();
     const updateSchema = z.object({
-      name: z.string().optional(),
       userName: z.string().optional(),
       avatarUrl: z.string().optional(),
       rating: z.number().min(0).max(5).optional(),
@@ -45,9 +36,9 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
       );
     }
 
-    // ✅ Update testimonial (Anyone can update)
+    // ✅ Update testimonial
     const updatedTestimonial = await prisma.testimonial.update({
-      where: { id: testimonialId },
+      where: { id },
       data: validatedData.data,
     });
 
@@ -58,29 +49,23 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
   }
 }
 
+// ✅ DELETE: Remove a testimonial
+export async function DELETE(req: NextRequest) {
+  const id = req.nextUrl.pathname.split("/").pop(); // Extracts ID from the URL
 
-export async function DELETE(req: Request) {
+  if (!id) {
+    return NextResponse.json({ error: "Testimonial ID is required" }, { status: 400 });
+  }
+
   try {
-    const url = new URL(req.url);
-    const id = url.pathname.split("/").filter(Boolean).pop(); // Ensures non-empty value
-
-    if (!id) {
-      return NextResponse.json({ error: "Testimonial ID is required" }, { status: 400 });
-    }
-
-    const numericId = parseInt(id, 10);
-    if (isNaN(numericId)) {
-      return NextResponse.json({ error: "Invalid testimonial ID" }, { status: 400 });
-    }
-
     // ✅ Check if testimonial exists
-    const existingTestimonial = await prisma.testimonial.findUnique({ where: { id: numericId } });
+    const existingTestimonial = await prisma.testimonial.findUnique({ where: { id } });
     if (!existingTestimonial) {
       return NextResponse.json({ error: "Testimonial not found" }, { status: 404 });
     }
 
-    // ✅ Delete testimonial (Anyone can delete)
-    await prisma.testimonial.delete({ where: { id: numericId } });
+    // ✅ Delete testimonial
+    await prisma.testimonial.delete({ where: { id } });
 
     return NextResponse.json({ message: "Testimonial deleted successfully" }, { status: 200 });
   } catch (error) {
@@ -88,6 +73,3 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ error: "Failed to delete testimonial" }, { status: 500 });
   }
 }
-
-
-
