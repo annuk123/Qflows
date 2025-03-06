@@ -97,15 +97,17 @@ export default function WhyChooseUs() {
 
       {/* CTA Section */}
       <div className="container mx-auto text-center mt-12">
-        <Link href="/languages/JavaScript">
+        
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           className="bg-blue-500 text-white px-6 py-3 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-600 transition-all"
         >
+          <Link href="/languages/JavaScript">
           Try It Now 🚀
+          </Link>
         </motion.button>
-        </Link>
+       
       </div>
     </section>
   );

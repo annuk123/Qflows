@@ -93,7 +93,7 @@ const Nav: React.FC<NavProps> = ({
             fontWeight="normal"
             fill="#0056D2"
           >
-            flow
+            flows
           </text>
           <path
   d="M 5 54 C 50 10, 80 100, 120 55"
