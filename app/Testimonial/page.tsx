@@ -378,7 +378,7 @@ const TestimonialsSection: React.FC = () => {
                 >
                   {/* Ensure storedUserId is compared as a string */}
                   {storedUserId && storedUserId.trim() === String(testimonial.userId).trim()
-                    ? (
+                    && (
                     <div className="absolute top-3 right-3 flex space-x-2">
                       <Pencil
                         className="w-5 h-5 text-blue-500 cursor-pointer hover:text-blue-700"
@@ -388,9 +388,7 @@ const TestimonialsSection: React.FC = () => {
                         className="w-5 h-5 text-gray-600 cursor-pointer hover:text-red-700 mb-5"
                         onClick={() => handleDeleteReview(testimonial.id)}
                       />
-                    </div>
-                    ) : (
-                        <p className="text-xs text-red-500">User ID Mismatch</p> // Debugging UI
+                    </div>// Debugging UI
                       )}
 
                   <div className="flex items-center space-x-4 mb-4">
