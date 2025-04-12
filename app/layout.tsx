@@ -27,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* <link rel="icon" href="/qflowslogo.png" type="image/Qflows-icon" /> */}
       <head>
         {/* <script
           async

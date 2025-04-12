@@ -31,8 +31,7 @@ Qflow is powered by a modern tech stack for scalability and performance:
 
 - **Frontend**: ReactJS, TypeScript, NextJS, TailwindCSS, Material-UI  
 - **Backend**: NodeJS, ExpressJS, Prisma ORM  
-- **Database**: NeonDB (PostgreSQL)  
-- **Authentication**: Auth.js (OAuth 2.0)  
+- **Database**: NeonDB (PostgreSQL)   
 - **UI Enhancements**: Zod, GSAP, Three.js  
 
 ---
@@ -65,10 +64,11 @@ Create a `.env.local` file in the root directory and add the following:
 DATABASE_URL=<Your Database Connection URL>  
 NEXTAUTH_URL=<Your App URL>
 NEXTAUTH_SECRET=<Your Next Secret Key>
-GOOGLE_CLIENT_ID=<Google OAuth Client ID>  
-GOOGLE_CLIENT_SECRET=<Google OAuth Client Secret>  
-GITHUB_CLIENT_ID=<GitHub OAuth Client ID>  
-GITHUB_CLIENT_SECRET=<GitHub OAuth Client Secret>  
+NEXT_PUBLIC_API_BASE_URL=<http://localhost:3000>
+NEXTAUTH_URL=<http://localhost:3000>
+CLOUDINARY_CLOUD_NAME=<your cloudinary cloud name>
+CLOUDINARY_API_KEY=<Your Cloudinary API Key>
+CLOUDINARY_API_SECRET=<Your Cloudinary API SECRET>
 ```  
 
 ### 5️⃣ Start the Development Server  

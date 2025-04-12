@@ -165,9 +165,6 @@ const Nav: React.FC<NavProps> = ({
           )}
 
         </div>
-        <Link href="/profile" className="hidden lg:block hover:bg-gray-300 rounded-full">
-            <ProfileIcon className="w-16 h-16" />
-          </Link>
 
           <Link href={"https://github.com/annuk123/Qflows"} className="hidden lg:block">
           <GitHubIcon />

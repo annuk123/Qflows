@@ -1,6 +1,13 @@
 "use client";
+// import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import Editor from "@monaco-editor/react";
+
+
+// const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
+//   ssr: false,
+// });
+
 
 type CodeEditorProps = {
   onRunCode: (code: string) => void;

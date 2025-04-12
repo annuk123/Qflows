@@ -3,8 +3,6 @@ import React, { useRef, useEffect, useState } from "react";
 import Nav from "@/app/components/Nav/navbar";
 import CodeEditor from "./editor/code";
 //import CodeRunner from "../PythonVisualizer/page";// Python visualizer component
-import { on } from "events";
-import RustExecutor from "@/app/languages/Rust/page";
 
 interface VisualizerProps {
   isDarkMode: boolean;
