@@ -1,6 +1,10 @@
 import { NextResponse, NextRequest } from "next/server";
-import { prisma } from "@/lib/prisma";
+import { PrismaClient } from '@prisma/client';
+//import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+
+
+const prisma = new PrismaClient();
 
 // ✅ PATCH: Update a testimonial
 export async function PATCH(req: NextRequest) {
