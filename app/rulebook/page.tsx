@@ -93,42 +93,42 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const rules = [
   {
-    title: "💻 Write or Paste TypeScript Code",
+    title: "Write or Paste TypeScript Code",
     description:
       "Start by writing or pasting your TypeScript code into the editor. The visualizer supports variable declarations, function expressions, binary operations, and setTimeout callbacks.",
   },
   {
-    title: "🧾 AST Viewer (Abstract Syntax Tree)",
+    title: "AST Viewer (Abstract Syntax Tree)",
     description:
       "As you type, the code is parsed into an AST (Abstract Syntax Tree) using `@typescript-eslint/typescript-estree`. This helps break down your code into its syntactic structure.",
   },
   {
-    title: "🧠 Step-by-Step Execution",
+    title: "Step-by-Step Execution",
     description:
       "Your code is executed virtually, one line at a time. Each step shows the executed line, current memory, event queue, and heap.",
   },
   {
-    title: "🔍 Memory Tracking",
+    title: "Memory Tracking",
     description:
       "Every variable and its value is stored in the memory section. Watch how values change over time as your code progresses.",
   },
   {
-    title: "📥 Event Queue Simulation",
+    title: "Event Queue Simulation",
     description:
       "Functions like `setTimeout` are tracked and added to the Event Queue. This visualizes how async operations are queued for later execution.",
   },
   {
-    title: "📦 Heap Representation",
+    title: "Heap Representation",
     description:
       "Heap stores references to functions and objects like callbacks. Each heap entry includes a unique ID and the function code.",
   },
   {
-    title: "🎯 Error Highlighting",
+    title: "Error Highlighting",
     description:
       "If your code has parsing errors or syntax issues, they will be highlighted. Fix them to simulate and visualize properly.",
   },
   {
-    title: "💡 Tip",
+    title: "Tip",
     description:
       "Only synchronous flow and `setTimeout`-based async simulation are supported for now. Support for promises, async/await, and loops will be added soon.",
   },
