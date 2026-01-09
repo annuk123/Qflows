@@ -83,7 +83,7 @@
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
     "dotenv-cli": "^7.4.4",
-    "next": "^15.2.2",
+    "next": "15.2.8",
     "postcss": "^8.5.3",
     "prisma": "^6.6.0",
     "style-loader": "^4.0.0",
